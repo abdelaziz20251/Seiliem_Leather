@@ -12,6 +12,7 @@ import { CartDrawer } from './components/CartDrawer';
 import { CheckoutModal } from './components/CheckoutModal';
 import { ProductQuickView } from './components/ProductQuickView';
 import { NotificationToast } from './components/NotificationToast';
+import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 
 export const App: React.FC = () => {
   return (
@@ -44,11 +45,12 @@ export const App: React.FC = () => {
         {/* Footer */}
         <Footer />
 
-        {/* Global Drawers & Modals */}
+        {/* Global Drawers, Modals & Floating CTA */}
         <CartDrawer />
         <CheckoutModal />
         <ProductQuickView />
         <NotificationToast />
+        <FloatingWhatsApp />
       </div>
     </CartProvider>
   );
