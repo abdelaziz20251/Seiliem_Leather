@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PRODUCTS } from '../data/products';
+import { PRODUCTS, STORE_WHATSAPP_NUMBER } from '../data/products';
 import { ProductCard } from './ProductCard';
 import { Sparkles, Layers } from 'lucide-react';
 
@@ -89,7 +89,7 @@ export const ProductGrid: React.FC = () => {
           </div>
 
           <a
-            href="https://wa.me/201092837465?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%A7%D9%84%D8%AD%D9%81%D8%B1%20%D9%88%D8%A7%D9%84%D8%AA%D8%AE%D8%B5%D9%8A%D8%B5%20%D8%A7%D9%84%D8%AE%D8%A7%D8%B5."
+            href={`https://wa.me/${STORE_WHATSAPP_NUMBER}?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%A7%D9%84%D8%AD%D9%81%D8%B1%20%D9%88%D8%A7%D9%84%D8%AA%D8%AE%D8%B5%D9%8A%D8%B5%20%D8%A7%D9%84%D8%AE%D8%A7%D8%B5.`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-xl bg-leather-espresso hover:bg-leather-dark text-leather-cream text-xs font-bold transition-colors border border-leather-brass/40 shadow"

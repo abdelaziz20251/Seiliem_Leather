@@ -1,6 +1,6 @@
 import type { Product } from '../types';
 
-export const STORE_WHATSAPP_NUMBER = '201092837465'; // رقم واتساب الإدارة (قابل للتعديل بسهولة)
+export const STORE_WHATSAPP_NUMBER = '201158300617'; // رقم واتساب الإدارة المعتمد (01158300617)
 
 export const PRODUCTS: Product[] = [
   {

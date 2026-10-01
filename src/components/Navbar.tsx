@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
             <span>جلد طبيعي بقري فاخر مدبوغ نباتياً • شحن لجميع محافظات مصر</span>
           </div>
           <div className="hidden md:block text-leather-parchment/80 font-mono text-[11px]">
-            واتساب المبيعات: 01092837465
+            واتساب المبيعات: 01158300617
           </div>
         </div>
       </div>

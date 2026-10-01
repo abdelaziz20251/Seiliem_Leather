@@ -42,7 +42,7 @@ export const Footer: React.FC = () => {
                 className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 hover:text-white hover:bg-emerald-900 transition-colors text-xs font-bold"
               >
                 <MessageCircle className="w-4 h-4 fill-emerald-400" />
-                <span>تواصل مع خدمة العملاء: 01092837465</span>
+                <span>تواصل مع خدمة العملاء: 01158300617</span>
               </a>
             </div>
           </div>
@@ -117,7 +117,7 @@ export const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-leather-brass flex-shrink-0" />
-                <span dir="ltr">+20 109 283 7465</span>
+                <span dir="ltr">+20 115 830 0617</span>
               </li>
               <li className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
