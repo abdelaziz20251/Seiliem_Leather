@@ -1,6 +1,6 @@
 import React from 'react';
 import { MessageCircle, Phone, MapPin, ShieldCheck, Sparkles } from 'lucide-react';
-import { STORE_WHATSAPP_NUMBER } from '../data/products';
+import { STORE_WHATSAPP_NUMBER, STORE_PHONE_DISPLAY, STORE_PHONE_INTL } from '../data/products';
 
 export const Footer: React.FC = () => {
   const directWhatsAppLink = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -42,7 +42,7 @@ export const Footer: React.FC = () => {
                 className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 hover:text-white hover:bg-emerald-900 transition-colors text-xs font-bold"
               >
                 <MessageCircle className="w-4 h-4 fill-emerald-400" />
-                <span>تواصل مع خدمة العملاء: 01158300617</span>
+                <span>تواصل مع خدمة العملاء: {STORE_PHONE_DISPLAY}</span>
               </a>
             </div>
           </div>
@@ -117,7 +117,7 @@ export const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-leather-brass flex-shrink-0" />
-                <span dir="ltr">+20 115 830 0617</span>
+                <span dir="ltr">{STORE_PHONE_INTL}</span>
               </li>
               <li className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />

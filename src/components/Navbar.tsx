@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ShoppingBag, MessageCircle, Menu, X, ShieldCheck, Sparkles } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { STORE_WHATSAPP_NUMBER } from '../data/products';
+import { STORE_WHATSAPP_NUMBER, STORE_PHONE_DISPLAY } from '../data/products';
 
 export const Navbar: React.FC = () => {
   const { totalItems, setIsCartOpen } = useCart();
@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
             <span>جلد طبيعي بقري فاخر مدبوغ نباتياً • شحن لجميع محافظات مصر</span>
           </div>
           <div className="hidden md:block text-leather-parchment/80 font-mono text-[11px]">
-            واتساب المبيعات: 01158300617
+            واتساب المبيعات: {STORE_PHONE_DISPLAY}
           </div>
         </div>
       </div>

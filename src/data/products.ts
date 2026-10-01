@@ -1,6 +1,9 @@
 import type { Product } from '../types';
 
-export const STORE_WHATSAPP_NUMBER = '201158300617'; // رقم واتساب الإدارة المعتمد (01158300617)
+// بيانات التواصل والواتساب المعتمدة
+export const STORE_WHATSAPP_NUMBER = '201113338412'; // الرقم الدولي لرابط واتساب
+export const STORE_PHONE_DISPLAY = '01113338412'; // العرض المحلي في الموقع
+export const STORE_PHONE_INTL = '+20 11 13338412'; // العرض الدولي الكامل
 
 export const PRODUCTS: Product[] = [
   {
