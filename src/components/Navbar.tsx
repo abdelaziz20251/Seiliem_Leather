@@ -84,25 +84,25 @@ export const Navbar: React.FC = () => {
               <span>طلب مباشر</span>
             </a>
 
-            {/* Cart Trigger Button */}
+            {/* Cart Trigger Button (44px Touch Target) */}
             <button
               id="cart-trigger-btn"
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2.5 rounded-full bg-leather-dark hover:bg-leather-espresso text-leather-cream border border-leather-brass/30 hover:border-leather-brass transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-leather-brass shadow-sm"
+              className="relative w-11 h-11 rounded-2xl bg-leather-dark hover:bg-leather-espresso text-leather-cream border border-leather-brass/40 hover:border-leather-brass flex items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-leather-brass shadow-sm active:scale-95"
               aria-label="سلة التسوق"
             >
               <ShoppingBag className="w-5 h-5 text-leather-brass-light" />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-leather-amber text-leather-darkest font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center shadow-md animate-bounce">
+                <span className="absolute -top-1 -right-1 bg-amber-500 text-leather-darkest font-black text-xs w-5 h-5 rounded-full flex items-center justify-center shadow-md animate-bounce">
                   {totalItems}
                 </span>
               )}
             </button>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button (44px Touch Target) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-leather-cream hover:bg-leather-dark"
+              className="md:hidden w-11 h-11 rounded-2xl bg-leather-dark/60 text-leather-cream hover:bg-leather-dark border border-leather-dark flex items-center justify-center active:scale-95"
               aria-label="القائمة الرئيسية"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

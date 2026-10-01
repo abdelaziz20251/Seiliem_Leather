@@ -14,11 +14,12 @@ import { ProductQuickView } from './components/ProductQuickView';
 import { NotificationToast } from './components/NotificationToast';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { SocialPopup } from './components/SocialPopup';
+import { StickyMobileCartBar } from './components/StickyMobileCartBar';
 
 export const App: React.FC = () => {
   return (
     <CartProvider>
-      <div className="min-h-screen bg-leather-cream text-leather-espresso flex flex-col font-cairo selection:bg-leather-brass selection:text-white">
+      <div className="min-h-screen bg-leather-cream text-leather-espresso flex flex-col font-cairo selection:bg-leather-brass selection:text-white overflow-x-hidden w-full relative">
         {/* Navigation Bar */}
         <Navbar />
 
@@ -53,6 +54,7 @@ export const App: React.FC = () => {
         <NotificationToast />
         <FloatingWhatsApp />
         <SocialPopup />
+        <StickyMobileCartBar />
       </div>
     </CartProvider>
   );

@@ -46,7 +46,7 @@ export const ProductGrid: React.FC = () => {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${
+                className={`flex items-center gap-2 px-5 py-2.5 min-h-[44px] sm:min-h-[40px] rounded-full text-xs sm:text-sm font-bold transition-all duration-300 active:scale-95 touch-manipulation ${
                   isActive
                     ? 'bg-leather-espresso text-leather-cream shadow-lg shadow-leather-espresso/20 scale-105 border border-leather-brass'
                     : 'bg-white text-leather-dark/80 hover:bg-leather-parchment border border-leather-parchment hover:border-leather-brass/40'

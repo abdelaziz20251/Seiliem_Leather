@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { X, Check, ShoppingBag, ShieldCheck, MessageCircle, Star, Sparkles } from 'lucide-react';
+import { X, ShoppingBag, ShieldCheck, MessageCircle, Star, Sparkles, Check, Plus, Minus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import type { ProductColor } from '../types';
 import { STORE_WHATSAPP_NUMBER } from '../data/products';
+import { ColorSelector } from './ColorSelector';
 
 export const ProductQuickView: React.FC = () => {
   const { quickViewProduct, setQuickViewProduct, addToCart, setIsCartOpen } = useCart();
@@ -42,15 +43,15 @@ export const ProductQuickView: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in">
       <div
-        className="relative w-full max-w-4xl bg-leather-darkest border border-leather-brass/40 rounded-3xl overflow-hidden shadow-2xl text-leather-cream text-right my-8"
+        className="relative w-full max-w-4xl bg-leather-darkest border-2 border-leather-brass/40 rounded-3xl overflow-hidden shadow-2xl text-leather-cream text-right my-auto max-h-[92vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
+        {/* Close Button (Large Touch Target 44px) */}
         <button
           onClick={() => setQuickViewProduct(null)}
-          className="absolute top-4 left-4 z-20 p-2.5 rounded-full bg-leather-espresso/90 hover:bg-leather-dark text-leather-parchment hover:text-white border border-leather-brass/30 transition-colors"
+          className="absolute top-4 left-4 z-20 w-11 h-11 rounded-full bg-leather-espresso/90 hover:bg-leather-dark text-leather-parchment hover:text-white border border-leather-brass/40 flex items-center justify-center shadow-lg transition-transform active:scale-95"
           aria-label="إغلاق النافذة"
         >
           <X className="w-5 h-5" />
@@ -59,22 +60,23 @@ export const ProductQuickView: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2">
           
           {/* Product Image Section */}
-          <div className="relative h-80 md:h-full min-h-[350px] bg-black/50 overflow-hidden">
+          <div className="relative h-72 sm:h-96 md:h-full min-h-[300px] bg-black/60 overflow-hidden">
             <img
+              key={selectedColor.image}
               src={selectedColor.image}
               alt={`${quickViewProduct.name} - ${selectedColor.name}`}
-              className="w-full h-full object-cover object-center transition-all duration-300"
+              className="w-full h-full object-cover object-center transition-all duration-300 animate-fade-in"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-leather-darkest/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-leather-darkest/80 via-transparent to-transparent pointer-events-none" />
             
-            <div className="absolute bottom-4 right-4 bg-leather-darkest/90 px-3 py-1.5 rounded-lg border border-leather-brass/30 text-xs font-semibold text-leather-sand flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-leather-brass" />
+            <div className="absolute bottom-4 right-4 bg-leather-darkest/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-leather-brass/40 text-xs font-bold text-leather-sand flex items-center gap-1.5 shadow-md">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span>معاينة حرة قبل استلام الشحنة</span>
             </div>
           </div>
 
           {/* Product Information Section */}
-          <div className="p-6 sm:p-8 flex flex-col justify-between space-y-6">
+          <div className="p-5 sm:p-8 flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               
               {/* Category & Rating */}
@@ -84,24 +86,24 @@ export const ProductQuickView: React.FC = () => {
                 </span>
                 <div className="flex items-center gap-1 text-leather-brass text-xs">
                   <Star className="w-4 h-4 fill-current text-leather-brass" />
-                  <span className="font-bold text-leather-cream">{quickViewProduct.rating}</span>
+                  <span className="font-bold text-xs text-leather-cream">{quickViewProduct.rating}</span>
                   <span className="text-leather-parchment/60">({quickViewProduct.reviewsCount} تقييم)</span>
                 </div>
               </div>
 
               {/* Title */}
-              <h2 className="text-xl sm:text-2xl font-black text-leather-cream font-serif">
+              <h2 className="text-xl sm:text-2xl font-black text-leather-cream font-serif leading-snug">
                 {quickViewProduct.name}
               </h2>
 
               {/* Price */}
-              <div className="flex items-baseline gap-3">
+              <div className="flex items-baseline gap-2.5">
                 <span className="text-2xl sm:text-3xl font-black text-leather-brass-light font-mono">
                   {quickViewProduct.price.toLocaleString('ar-EG')}
                 </span>
-                <span className="text-sm font-bold text-leather-parchment/70">جنيه مصري</span>
+                <span className="text-sm font-bold text-leather-parchment/80">جنيه مصري</span>
                 {quickViewProduct.originalPrice && (
-                  <span className="text-sm text-leather-parchment/40 line-through">
+                  <span className="text-xs sm:text-sm text-leather-parchment/50 line-through">
                     {quickViewProduct.originalPrice.toLocaleString('ar-EG')} ج.م
                   </span>
                 )}
@@ -112,50 +114,26 @@ export const ProductQuickView: React.FC = () => {
                 {quickViewProduct.shortDescription}
               </p>
 
-              {/* Color Selector */}
-              <div className="space-y-2 pt-2 border-t border-leather-dark">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-leather-parchment/90">
-                    اللون المحدد: <strong className="text-leather-brass-light">{selectedColor.name}</strong>
-                  </span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  {quickViewProduct.colors.map((color, idx) => {
-                    const isSelected = selectedColor.name === color.name;
-                    return (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => setSelectedColor(color)}
-                        className={`relative w-9 h-9 rounded-full transition-all duration-200 border-2 ${
-                          isSelected
-                            ? 'border-leather-brass ring-2 ring-leather-brass/50 scale-110'
-                            : 'border-leather-dark hover:scale-105 opacity-80'
-                        }`}
-                        style={{ backgroundColor: color.code }}
-                        title={color.name}
-                      >
-                        {isSelected && (
-                          <span className="absolute inset-0 flex items-center justify-center text-white drop-shadow">
-                            <Check className="w-4 h-4 stroke-[3]" />
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
+              {/* Large Touch-Friendly Color Selector */}
+              <div className="pt-2 border-t border-leather-dark">
+                <ColorSelector
+                  colors={quickViewProduct.colors}
+                  selectedColor={selectedColor}
+                  onSelectColor={setSelectedColor}
+                  size="lg"
+                />
               </div>
 
               {/* Handcrafted Specifications List */}
               <div className="space-y-2 pt-2 border-t border-leather-dark">
-                <span className="text-xs font-bold text-leather-honey flex items-center gap-1.5">
+                <span className="text-xs font-bold text-leather-sand flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-leather-brass" />
                   <span>مواصفات الحرفة اليدوية:</span>
                 </span>
                 <ul className="space-y-1.5 text-xs text-leather-parchment/75">
                   {quickViewProduct.details.map((detail, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className="text-leather-brass mt-0.5">•</span>
+                      <span className="text-leather-brass font-bold mt-0.5">•</span>
                       <span>{detail}</span>
                     </li>
                   ))}
@@ -166,47 +144,64 @@ export const ProductQuickView: React.FC = () => {
 
             {/* Quantity and Actions */}
             <div className="space-y-4 pt-4 border-t border-leather-dark">
-              <div className="flex items-center gap-4">
-                <span className="text-xs font-semibold text-leather-parchment/80">الكمية:</span>
-                <div className="inline-flex items-center rounded-xl bg-leather-espresso border border-leather-dark p-1">
+              {/* Quantity Selector with 44px Touch Targets */}
+              <div className="flex items-center justify-between gap-4 bg-leather-espresso/70 p-3 rounded-2xl border border-leather-dark">
+                <span className="text-xs font-bold text-leather-parchment/90">الكمية:</span>
+                
+                <div className="inline-flex items-center rounded-xl bg-leather-dark border border-leather-darkest p-1">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="w-8 h-8 rounded-lg bg-leather-dark hover:bg-leather-cognac text-leather-cream flex items-center justify-center font-bold text-sm transition-colors"
+                    className="w-10 h-10 rounded-lg bg-leather-espresso hover:bg-leather-cognac text-leather-cream flex items-center justify-center transition-colors active:scale-90"
+                    aria-label="إنقاص الكمية"
                   >
-                    -
+                    <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-10 text-center font-bold text-sm font-mono">{quantity}</span>
+                  <span className="w-12 text-center font-bold text-base font-mono text-leather-cream">
+                    {quantity}
+                  </span>
                   <button
                     onClick={() => setQuantity((q) => q + 1)}
-                    className="w-8 h-8 rounded-lg bg-leather-dark hover:bg-leather-cognac text-leather-cream flex items-center justify-center font-bold text-sm transition-colors"
+                    className="w-10 h-10 rounded-lg bg-leather-espresso hover:bg-leather-cognac text-leather-cream flex items-center justify-center transition-colors active:scale-90"
+                    aria-label="زيادة الكمية"
                   >
-                    +
+                    <Plus className="w-4 h-4" />
                   </button>
                 </div>
-                <div className="mr-auto text-left font-mono text-sm font-bold text-leather-brass-light">
+
+                <div className="font-mono text-base font-black text-leather-brass-light">
                   {(quickViewProduct.price * quantity).toLocaleString('ar-EG')} ج.م
                 </div>
               </div>
 
+              {/* Action Buttons (Full Width on Mobile, Min 48px Height) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button
                   onClick={handleAddToCart}
-                  className={`w-full py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-lg ${
+                  className={`w-full min-h-[50px] h-13 py-3.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-lg active:scale-[0.98] ${
                     isAddedFeedback
                       ? 'bg-emerald-700 text-white'
-                      : 'bg-gradient-to-r from-leather-cognac-rich to-leather-cognac hover:from-leather-cognac hover:to-leather-tan text-white border border-leather-brass/40'
+                      : 'bg-gradient-to-r from-leather-cognac-rich via-leather-cognac to-leather-tan text-white border border-leather-brass/40 hover:shadow-leather-brass/30'
                   }`}
                 >
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>{isAddedFeedback ? 'تمت الإضافة للسلة!' : 'إضافة إلى سلة التسوق'}</span>
+                  {isAddedFeedback ? (
+                    <>
+                      <Check className="w-5 h-5 stroke-[3]" />
+                      <span>تمت الإضافة للسلة!</span>
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag className="w-5 h-5" />
+                      <span>إضافة إلى سلة التسوق</span>
+                    </>
+                  )}
                 </button>
 
                 <button
                   onClick={directWhatsAppOrder}
-                  className="w-full py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-emerald-900/60 hover:bg-emerald-800 text-emerald-200 border border-emerald-600/40 flex items-center justify-center gap-2 transition-colors"
+                  className="w-full min-h-[50px] h-13 py-3.5 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-emerald-950 to-emerald-900 hover:from-emerald-900 hover:to-emerald-800 text-emerald-100 border border-emerald-500/40 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
                 >
-                  <MessageCircle className="w-4 h-4 text-[#25D366] fill-[#25D366]" />
-                  <span>طلب مباشر بالواتساب</span>
+                  <MessageCircle className="w-5 h-5 text-[#25D366] fill-[#25D366]" />
+                  <span>طلب فوري بالواتساب</span>
                 </button>
               </div>
             </div>

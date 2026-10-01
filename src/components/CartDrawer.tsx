@@ -147,31 +147,31 @@ export const CartDrawer: React.FC = () => {
                       {item.price.toLocaleString('ar-EG')} ج.م
                     </div>
 
-                    {/* Quantity & Delete Controls */}
-                    <div className="flex items-center justify-between mt-2">
-                      <div className="inline-flex items-center rounded-lg bg-leather-dark border border-leather-darkest p-0.5">
+                    {/* Quantity & Delete Controls (Enlarged for touch comfort) */}
+                    <div className="flex items-center justify-between mt-3 pt-2 border-t border-leather-dark/60">
+                      <div className="inline-flex items-center rounded-xl bg-leather-dark border border-leather-darkest p-1 gap-1">
                         <button
                           onClick={() => updateQuantity(item.uniqueKey, item.quantity - 1)}
-                          className="w-6 h-6 rounded bg-leather-espresso hover:bg-leather-cognac flex items-center justify-center text-xs text-leather-cream transition-colors"
+                          className="w-9 h-9 rounded-lg bg-leather-espresso hover:bg-leather-cognac text-leather-cream flex items-center justify-center transition-colors active:scale-90"
                           aria-label="إنقاص الكمية"
                         >
-                          <Minus className="w-3 h-3" />
+                          <Minus className="w-4 h-4" />
                         </button>
-                        <span className="w-8 text-center text-xs font-bold font-mono">
+                        <span className="w-9 text-center text-sm font-bold font-mono text-leather-cream">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => updateQuantity(item.uniqueKey, item.quantity + 1)}
-                          className="w-6 h-6 rounded bg-leather-espresso hover:bg-leather-cognac flex items-center justify-center text-xs text-leather-cream transition-colors"
+                          className="w-9 h-9 rounded-lg bg-leather-espresso hover:bg-leather-cognac text-leather-cream flex items-center justify-center transition-colors active:scale-90"
                           aria-label="زيادة الكمية"
                         >
-                          <Plus className="w-3 h-3" />
+                          <Plus className="w-4 h-4" />
                         </button>
                       </div>
 
                       <button
                         onClick={() => removeFromCart(item.uniqueKey)}
-                        className="text-leather-parchment/40 hover:text-red-400 p-1.5 transition-colors"
+                        className="w-10 h-10 rounded-xl bg-leather-dark hover:bg-red-950/60 text-leather-parchment/60 hover:text-red-400 flex items-center justify-center transition-colors border border-transparent hover:border-red-500/30"
                         title="حذف من السلة"
                         aria-label="حذف المنتج"
                       >
@@ -220,10 +220,10 @@ export const CartDrawer: React.FC = () => {
               <button
                 id="cart-checkout-btn"
                 onClick={handleProceedToCheckout}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-leather-cognac-rich to-leather-cognac hover:from-leather-cognac hover:to-leather-tan text-white font-bold text-sm shadow-xl shadow-leather-cognac/30 hover:shadow-leather-brass/20 flex items-center justify-center gap-2 border border-leather-brass/40 transition-all duration-300"
+                className="w-full min-h-[54px] h-14 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-800 hover:from-emerald-500 hover:to-emerald-600 text-white font-bold text-base shadow-xl shadow-emerald-950/60 flex items-center justify-center gap-2.5 border border-emerald-400/40 active:scale-[0.98] transition-all"
               >
                 <span>متابعة إتمام الطلب (واتساب)</span>
-                <ArrowLeft className="w-4 h-4" />
+                <ArrowLeft className="w-5 h-5" />
               </button>
             </div>
           )}
