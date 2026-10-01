@@ -1,6 +1,7 @@
 import React from 'react';
 import { MessageCircle, Phone, MapPin, ShieldCheck, Sparkles } from 'lucide-react';
-import { STORE_WHATSAPP_NUMBER, STORE_PHONE_DISPLAY, STORE_PHONE_INTL } from '../data/products';
+import { InstagramIcon, FacebookIcon, TikTokIcon } from './SocialIcons';
+import { STORE_WHATSAPP_NUMBER, STORE_PHONE_DISPLAY, STORE_PHONE_INTL, SOCIAL_LINKS } from '../data/products';
 
 export const Footer: React.FC = () => {
   const directWhatsAppLink = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -33,8 +34,51 @@ export const Footer: React.FC = () => {
               براند مصري متخصص في تصميم وتصنيع المصنوعات الجلدية الطبيعية 100% يدوياً بحرفية عالية. نجمع بين أصالة الدباغة النباتية ودقة الخياطة اليدوية لتدوم مقتنياتك لعقود.
             </p>
 
+            {/* Social Media Row */}
+            <div className="flex items-center gap-3 pt-1">
+              <a
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-leather-dark hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] border border-leather-brass/30 flex items-center justify-center text-leather-cream hover:text-white transition-all duration-300 shadow-sm"
+                title="تابعنا على انستجرام"
+              >
+                <InstagramIcon className="w-4 h-4" />
+              </a>
+
+              <a
+                href={SOCIAL_LINKS.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-leather-dark hover:bg-[#1877F2] border border-leather-brass/30 flex items-center justify-center text-leather-cream hover:text-white transition-all duration-300 shadow-sm"
+                title="تابعنا على فيسبوك"
+              >
+                <FacebookIcon className="w-4 h-4 fill-current" />
+              </a>
+
+              <a
+                href={SOCIAL_LINKS.tiktok}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-leather-dark hover:bg-black border border-leather-brass/30 flex items-center justify-center text-leather-cream hover:text-cyan-400 transition-all duration-300 shadow-sm"
+                title="تابعنا على تيك توك"
+              >
+                <TikTokIcon className="w-4 h-4" />
+              </a>
+
+              <a
+                href={SOCIAL_LINKS.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-leather-dark hover:bg-[#25D366] border border-leather-brass/30 flex items-center justify-center text-leather-cream hover:text-white transition-all duration-300 shadow-sm"
+                title="محادثة واتساب مباشرة"
+              >
+                <MessageCircle className="w-4 h-4 fill-current" />
+              </a>
+            </div>
+
             {/* Direct WhatsApp Callout */}
-            <div className="pt-2">
+            <div className="pt-1">
               <a
                 href={directWhatsAppLink}
                 target="_blank"

@@ -5,6 +5,14 @@ export const STORE_WHATSAPP_NUMBER = '201113338412'; // الرقم الدولي 
 export const STORE_PHONE_DISPLAY = '01113338412'; // العرض المحلي في الموقع
 export const STORE_PHONE_INTL = '+20 11 13338412'; // العرض الدولي الكامل
 
+// روابط صفحات السوشيال ميديا الرسمية
+export const SOCIAL_LINKS = {
+  instagram: 'https://instagram.com/selim.leather', // ضع رابط انستجرام الخاص بك هنا
+  facebook: 'https://facebook.com/selim.leather', // ضع رابط فيسبوك الخاص بك هنا
+  tiktok: 'https://tiktok.com/@selimleather', // ضع رابط تيك توك الخاص بك هنا
+  whatsapp: `https://wa.me/${STORE_WHATSAPP_NUMBER}`
+};
+
 export const PRODUCTS: Product[] = [
   {
     id: 'bag-heritage-messenger',

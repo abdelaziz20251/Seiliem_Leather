@@ -13,6 +13,7 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { ProductQuickView } from './components/ProductQuickView';
 import { NotificationToast } from './components/NotificationToast';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { SocialPopup } from './components/SocialPopup';
 
 export const App: React.FC = () => {
   return (
@@ -51,6 +52,7 @@ export const App: React.FC = () => {
         <ProductQuickView />
         <NotificationToast />
         <FloatingWhatsApp />
+        <SocialPopup />
       </div>
     </CartProvider>
   );
