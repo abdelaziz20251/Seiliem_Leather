@@ -34,47 +34,60 @@ export const Footer: React.FC = () => {
               براند مصري متخصص في تصميم وتصنيع المصنوعات الجلدية الطبيعية 100% يدوياً بحرفية عالية. نجمع بين أصالة الدباغة النباتية ودقة الخياطة اليدوية لتدوم مقتنياتك لعقود.
             </p>
 
-            {/* Social Media Row */}
-            <div className="flex items-center gap-3 pt-1">
-              <a
-                href={SOCIAL_LINKS.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-leather-dark hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] border border-leather-brass/30 flex items-center justify-center text-leather-cream hover:text-white transition-all duration-300 shadow-sm"
-                title="تابعنا على انستجرام"
-              >
-                <InstagramIcon className="w-4 h-4" />
-              </a>
+            {/* Clear Branded Social Media Row */}
+            <div className="space-y-2.5 pt-2">
+              <span className="text-xs font-bold text-leather-sand block">
+                تواصل وتابع صفحاتنا الرسمية:
+              </span>
+              <div className="flex flex-wrap items-center gap-2.5">
+                {/* Facebook */}
+                <a
+                  href={SOCIAL_LINKS.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#1877F2] hover:bg-[#166fe5] text-white text-xs font-bold shadow-md hover:shadow-blue-600/30 transition-all duration-300 transform hover:-translate-y-0.5 border border-white/20 active:scale-95"
+                  title="صفحتنا الرسمية على فيسبوك"
+                >
+                  <FacebookIcon className="w-4 h-4 fill-white" />
+                  <span>فيسبوك</span>
+                </a>
 
-              <a
-                href={SOCIAL_LINKS.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-leather-dark hover:bg-[#1877F2] border border-leather-brass/30 flex items-center justify-center text-leather-cream hover:text-white transition-all duration-300 shadow-sm"
-                title="تابعنا على فيسبوك"
-              >
-                <FacebookIcon className="w-4 h-4 fill-current" />
-              </a>
+                {/* Instagram */}
+                <a
+                  href={SOCIAL_LINKS.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-95 text-white text-xs font-bold shadow-md hover:shadow-pink-600/30 transition-all duration-300 transform hover:-translate-y-0.5 border border-white/20 active:scale-95"
+                  title="صفحتنا على انستجرام"
+                >
+                  <InstagramIcon className="w-4 h-4 text-white stroke-[2.5]" />
+                  <span>انستجرام</span>
+                </a>
 
-              <a
-                href={SOCIAL_LINKS.tiktok}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-leather-dark hover:bg-black border border-leather-brass/30 flex items-center justify-center text-leather-cream hover:text-cyan-400 transition-all duration-300 shadow-sm"
-                title="تابعنا على تيك توك"
-              >
-                <TikTokIcon className="w-4 h-4" />
-              </a>
+                {/* TikTok */}
+                <a
+                  href={SOCIAL_LINKS.tiktok}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black hover:bg-zinc-900 text-white text-xs font-bold shadow-md hover:shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-0.5 border border-cyan-400/40 active:scale-95"
+                  title="فيديوهاتنا على تيك توك"
+                >
+                  <TikTokIcon className="w-4 h-4 text-cyan-400" />
+                  <span>تيك توك</span>
+                </a>
 
-              <a
-                href={SOCIAL_LINKS.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-leather-dark hover:bg-[#25D366] border border-leather-brass/30 flex items-center justify-center text-leather-cream hover:text-white transition-all duration-300 shadow-sm"
-                title="محادثة واتساب مباشرة"
-              >
-                <MessageCircle className="w-4 h-4 fill-current" />
-              </a>
+                {/* WhatsApp */}
+                <a
+                  href={SOCIAL_LINKS.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold shadow-md hover:shadow-emerald-600/30 transition-all duration-300 transform hover:-translate-y-0.5 border border-white/20 active:scale-95"
+                  title="تواصل مباشر عبر واتساب"
+                >
+                  <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+                  <span>واتساب</span>
+                </a>
+              </div>
             </div>
 
             {/* Direct WhatsApp Callout */}
@@ -94,27 +107,27 @@ export const Footer: React.FC = () => {
           {/* Quick Links */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-leather-sand font-serif border-b border-leather-dark pb-2">
-              المجموعات
+              حقيبة The Artisan Dopp Kit
             </h4>
             <ul className="space-y-2 text-xs text-leather-parchment/75">
               <li>
                 <a href="#products" className="hover:text-leather-brass-light transition-colors">
-                  شنط جلدية رجالي وحريمي
+                  بني عسلي معتق (Vintage Brown)
                 </a>
               </li>
               <li>
                 <a href="#products" className="hover:text-leather-brass-light transition-colors">
-                  محافظ جيب وكروت RFID
+                  بني شوكولاتة داكن (Dark Chocolate)
                 </a>
               </li>
               <li>
                 <a href="#products" className="hover:text-leather-brass-light transition-colors">
-                  أساور وإكسسوارات نحاسية
+                  أخضر زيتي ملكي (Olive Green)
                 </a>
               </li>
               <li>
                 <a href="#products" className="hover:text-leather-brass-light transition-colors">
-                  حقائب سفر دافل ويك إند
+                  هافان جملي دافئ (Classic Tan)
                 </a>
               </li>
             </ul>

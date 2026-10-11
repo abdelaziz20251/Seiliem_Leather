@@ -13,6 +13,7 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { ProductQuickView } from './components/ProductQuickView';
 import { NotificationToast } from './components/NotificationToast';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { FloatingSocialDock } from './components/FloatingSocialDock';
 import { SocialPopup } from './components/SocialPopup';
 import { StickyMobileCartBar } from './components/StickyMobileCartBar';
 
@@ -53,6 +54,7 @@ export const App: React.FC = () => {
         <ProductQuickView />
         <NotificationToast />
         <FloatingWhatsApp />
+        <FloatingSocialDock />
         <SocialPopup />
         <StickyMobileCartBar />
       </div>

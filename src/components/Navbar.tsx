@@ -57,7 +57,7 @@ export const Navbar: React.FC = () => {
               الرئيسية
             </a>
             <a href="#products" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
-              المجموعات
+              تفاصيل الحقيبة والألوان
             </a>
             <a href="#craftsmanship" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
               حرفتنا اليدوية
@@ -126,7 +126,7 @@ export const Navbar: React.FC = () => {
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
-            المجموعات والمنتجات
+            تفاصيل الحقيبة والألوان
           </a>
           <a
             href="#craftsmanship"

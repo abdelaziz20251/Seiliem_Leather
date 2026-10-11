@@ -140,7 +140,7 @@ export const SocialPopup: React.FC = () => {
                   تيك توك (TikTok)
                 </div>
                 <div className="text-[11px] text-leather-parchment/60 font-mono" dir="ltr">
-                  @selimleather
+                  @seliem.handmade.leather
                 </div>
               </div>
             </div>

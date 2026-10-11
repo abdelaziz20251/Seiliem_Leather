@@ -30,15 +30,15 @@ export const Hero: React.FC = () => {
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-leather-cream tracking-tight leading-[1.25] font-serif">
-              فخامة الجلد الطبيعي
+              فخامة الجلد الطبيعي المعتق
               <span className="block mt-2 bg-gradient-to-l from-leather-brass-light via-leather-honey to-leather-sand bg-clip-text text-transparent">
-                صُنعت لتبقى معك أجيالاً
+                حقيبة اليد والمستلزمات «Artisan Dopp Kit»
               </span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-base sm:text-lg text-leather-parchment/85 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-normal">
-              ننتقي في <strong className="text-leather-brass font-bold">سليم للجلود</strong> أعلى طبقات الجلد البقري المدبوغ نباتياً (Full-Grain) لنقدم حقائب، محافظ، وإكسسوارات تجمع بين قوة التحمل والأناقة الكلاسيكية الخالدة مع حق <span className="underline decoration-leather-brass underline-offset-4 font-semibold text-leather-cream">المعاينة والفحص قبل الاستلام</span>.
+              نصنع في <strong className="text-leather-brass font-bold">سليم للجلود</strong> تحفتنا الحرفية من أرقى طبقات الجلد البقري الطبيعي 100% بنمط Crazy Horse الفاخر. رفيقك اليومي الأنيق لتنظيم أدوات الحلاقة، العطور، والهواتف مع سحاب نحاسي متين وحق <span className="underline decoration-leather-brass underline-offset-4 font-semibold text-leather-cream">المعاينة والفحص قبل الاستلام</span>.
             </p>
 
             {/* Core Trust Pillars */}
@@ -46,8 +46,8 @@ export const Hero: React.FC = () => {
               <div className="flex items-center gap-2.5 bg-leather-dark/60 border border-leather-dark/90 rounded-xl p-3 text-right">
                 <CheckCircle2 className="w-5 h-5 text-leather-brass flex-shrink-0" />
                 <div>
-                  <div className="text-xs font-bold text-leather-cream">جلد بقري 100%</div>
-                  <div className="text-[11px] text-leather-parchment/70">مدبوغ نباتياً بالكامل</div>
+                  <div className="text-xs font-bold text-leather-cream">جلد بقري طبيعي 100%</div>
+                  <div className="text-[11px] text-leather-parchment/70">تشطيب Crazy Horse الفاخر</div>
                 </div>
               </div>
 
@@ -75,7 +75,7 @@ export const Hero: React.FC = () => {
                 id="hero-shop-cta"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-leather-cognac-rich to-leather-cognac hover:from-leather-cognac hover:to-leather-tan text-white font-bold text-base shadow-xl shadow-leather-cognac/30 hover:shadow-leather-brass/20 transition-all duration-300 transform hover:-translate-y-0.5 border border-leather-brass/30"
               >
-                <span>تسوق التشكيلة الآن</span>
+                <span>اكتشف تفاصيل الحقيبة والألوان</span>
                 <ArrowLeft className="w-5 h-5" />
               </a>
 
@@ -101,10 +101,10 @@ export const Hero: React.FC = () => {
               
               {/* Product Showcase Container */}
               <div className="relative rounded-2xl overflow-hidden bg-leather-espresso border-2 border-leather-brass/40 shadow-2xl shadow-black/80">
-                <div className="relative h-80 sm:h-96 w-full overflow-hidden">
+                <div className="relative h-80 sm:h-96 w-full overflow-hidden bg-leather-darkest">
                   <img
-                    src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1000&q=85"
-                    alt="حقيبة ساعي البريد الكلاسيكية من سليم للجلود"
+                    src="/products/vintage-brown.jpeg"
+                    alt="حقيبة اليد والمستلزمات الفاخرة Artisan Dopp Kit من سليم للجلود"
                     className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-leather-darkest via-transparent to-black/20" />
@@ -112,7 +112,7 @@ export const Hero: React.FC = () => {
                   {/* Floating Handcrafted Tag */}
                   <div className="absolute top-4 right-4 bg-leather-darkest/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-leather-brass/50 text-xs font-bold text-leather-brass-light flex items-center gap-1.5 shadow-lg">
                     <Sparkles className="w-3.5 h-3.5 text-leather-brass" />
-                    <span>مجموعة التراث الحرفي 2026</span>
+                    <span>إصدار حصري 2026 • 4 ألوان</span>
                   </div>
 
                   {/* Inspection Notice Tag */}
@@ -125,11 +125,11 @@ export const Hero: React.FC = () => {
                 {/* Card Bottom Meta */}
                 <div className="p-5 bg-gradient-to-b from-leather-espresso to-leather-darkest border-t border-leather-dark flex items-center justify-between">
                   <div>
-                    <span className="text-xs text-leather-honey font-medium block">القطعة المميزة هذا الأسبوع</span>
-                    <h3 className="text-lg font-bold text-leather-cream font-serif">حقيبة Heritage Messenger</h3>
+                    <span className="text-xs text-leather-honey font-medium block">الإصدار الحرفي الأيقوني</span>
+                    <h3 className="text-lg font-bold text-leather-cream font-serif">The Artisan Dopp Kit</h3>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-leather-brass-light font-black text-lg">1,850 ج.م</span>
-                      <span className="text-xs text-leather-parchment/60 line-through">2,200 ج.م</span>
+                      <span className="text-leather-brass-light font-black text-lg">890 ج.م</span>
+                      <span className="text-xs text-leather-parchment/60 line-through">1,150 ج.م</span>
                     </div>
                   </div>
 

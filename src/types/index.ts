@@ -7,7 +7,7 @@ export interface ProductColor {
 export interface Product {
   id: string;
   name: string;
-  category: 'bags' | 'wallets' | 'bracelets';
+  category: string;
   categoryName: string;
   price: number;
   originalPrice?: number;
