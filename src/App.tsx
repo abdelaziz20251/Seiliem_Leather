@@ -1,4 +1,5 @@
 import React from 'react';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { CartProvider } from './context/CartContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -17,48 +18,62 @@ import { FloatingSocialDock } from './components/FloatingSocialDock';
 import { SocialPopup } from './components/SocialPopup';
 import { StickyMobileCartBar } from './components/StickyMobileCartBar';
 
+const AppContent: React.FC = () => {
+  const { isRTL } = useLanguage();
+
+  return (
+    <div
+      className={`min-h-screen bg-leather-cream text-leather-espresso flex flex-col ${
+        isRTL ? 'font-cairo' : 'font-sans'
+      } selection:bg-leather-brass selection:text-white overflow-x-hidden w-full relative`}
+    >
+      {/* Navigation Bar */}
+      <Navbar />
+
+      {/* Main Content */}
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <Hero />
+
+        {/* Trust Badges */}
+        <TrustBadges />
+
+        {/* Master Product Showcase & Color Studio */}
+        <ProductGrid />
+
+        {/* Handcraft & Quality Story */}
+        <CraftsmanshipSection />
+
+        {/* Customer Reviews */}
+        <Testimonials />
+
+        {/* Frequently Asked Questions */}
+        <FAQSection />
+      </main>
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Global Drawers, Modals & Floating CTA */}
+      <CartDrawer />
+      <CheckoutModal />
+      <ProductQuickView />
+      <NotificationToast />
+      <FloatingWhatsApp />
+      <FloatingSocialDock />
+      <SocialPopup />
+      <StickyMobileCartBar />
+    </div>
+  );
+};
+
 export const App: React.FC = () => {
   return (
-    <CartProvider>
-      <div className="min-h-screen bg-leather-cream text-leather-espresso flex flex-col font-cairo selection:bg-leather-brass selection:text-white overflow-x-hidden w-full relative">
-        {/* Navigation Bar */}
-        <Navbar />
-
-        {/* Main Content */}
-        <main className="flex-grow">
-          {/* Hero Section */}
-          <Hero />
-
-          {/* Trust Badges */}
-          <TrustBadges />
-
-          {/* Product Grid & Categories */}
-          <ProductGrid />
-
-          {/* Handcraft & Quality Story */}
-          <CraftsmanshipSection />
-
-          {/* Customer Reviews */}
-          <Testimonials />
-
-          {/* Frequently Asked Questions */}
-          <FAQSection />
-        </main>
-
-        {/* Footer */}
-        <Footer />
-
-        {/* Global Drawers, Modals & Floating CTA */}
-        <CartDrawer />
-        <CheckoutModal />
-        <ProductQuickView />
-        <NotificationToast />
-        <FloatingWhatsApp />
-        <FloatingSocialDock />
-        <SocialPopup />
-        <StickyMobileCartBar />
-      </div>
-    </CartProvider>
+    <LanguageProvider>
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
+    </LanguageProvider>
   );
 };
 

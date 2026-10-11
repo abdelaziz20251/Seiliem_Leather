@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { ShoppingBag, MessageCircle, Menu, X, ShieldCheck, Sparkles } from 'lucide-react';
+import { ShoppingBag, MessageCircle, Menu, X, ShieldCheck, Sparkles, Globe } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import { STORE_WHATSAPP_NUMBER, STORE_PHONE_DISPLAY } from '../data/products';
 
 export const Navbar: React.FC = () => {
   const { totalItems, setIsCartOpen } = useCart();
+  const { t, language, toggleLanguage } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const directWhatsAppLink = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    'مرحباً سليم للجلود، أود الاستفسار عن التشكيلة المتوفرة وعروض اليوم.'
+    language === 'en'
+      ? 'Hello Selim Leather, I would like to inquire about The Artisan Dopp Kit and current offers.'
+      : 'مرحباً سليم للجلود، أود الاستفسار عن التشكيلة المتوفرة وعروض اليوم.'
   )}`;
 
   return (
@@ -18,14 +22,14 @@ export const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-center text-[11px] sm:text-xs font-medium">
           <div className="hidden sm:flex items-center gap-1.5 text-leather-brass">
             <ShieldCheck className="w-4 h-4 text-leather-brass" />
-            <span>معاينة وفحص الشحنة قبل الاستلام والدفع 100%</span>
+            <span>{t.common.inspectNotice}</span>
           </div>
           <div className="flex items-center justify-center gap-2 mx-auto sm:mx-0">
             <Sparkles className="w-3.5 h-3.5 text-leather-brass-light animate-pulse" />
-            <span>جلد طبيعي بقري فاخر مدبوغ نباتياً • شحن لجميع محافظات مصر</span>
+            <span>{t.navbar.announcement}</span>
           </div>
           <div className="hidden md:block text-leather-parchment/80 font-mono text-[11px]">
-            واتساب المبيعات: {STORE_PHONE_DISPLAY}
+            {t.navbar.salesWhatsApp} {STORE_PHONE_DISPLAY}
           </div>
         </div>
       </div>
@@ -45,43 +49,57 @@ export const Navbar: React.FC = () => {
                   SELIM LEATHER
                 </span>
                 <span className="text-[10px] text-leather-honey tracking-widest uppercase -mt-1 font-semibold">
-                  سليم للمصنوعات الجلدية الطبيعية
+                  {t.common.brandSub}
                 </span>
               </div>
             </a>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <nav className="hidden md:flex items-center gap-7 lg:gap-8 text-sm font-medium">
             <a href="#hero" className="text-leather-cream hover:text-leather-brass-light transition-colors">
-              الرئيسية
+              {t.navbar.home}
             </a>
             <a href="#products" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
-              تفاصيل الحقيبة والألوان
+              {t.navbar.doppKit}
             </a>
             <a href="#craftsmanship" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
-              حرفتنا اليدوية
+              {t.navbar.craftsmanship}
             </a>
             <a href="#testimonials" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
-              آراء العملاء
+              {t.navbar.reviews}
             </a>
             <a href="#faqs" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
-              الأسئلة الشائعة
+              {t.navbar.faqs}
             </a>
           </nav>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3.5">
+            {/* Language Switcher Button (Desktop & Mobile) */}
+            <button
+              onClick={toggleLanguage}
+              id="lang-switcher-btn"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-leather-espresso hover:bg-leather-dark border border-leather-brass/40 hover:border-leather-brass text-leather-sand hover:text-white transition-all duration-200 text-xs font-bold active:scale-95 shadow-sm"
+              title={language === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
+              aria-label="Switch Language"
+            >
+              <Globe className="w-3.5 h-3.5 text-leather-brass-light" />
+              <span className="tracking-wide">
+                {t.navbar.switchLangText}
+              </span>
+            </button>
+
             {/* Direct WhatsApp CTA */}
             <a
               href={directWhatsAppLink}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-2 bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/40 text-[#25D366] px-3.5 py-2 rounded-full text-xs font-bold transition-all duration-200"
-              title="تواصل مباشر عبر واتساب"
+              title={t.navbar.directOrder}
             >
               <MessageCircle className="w-4 h-4 fill-current" />
-              <span>طلب مباشر</span>
+              <span>{t.navbar.directOrder}</span>
             </a>
 
             {/* Cart Trigger Button (44px Touch Target) */}
@@ -89,7 +107,7 @@ export const Navbar: React.FC = () => {
               id="cart-trigger-btn"
               onClick={() => setIsCartOpen(true)}
               className="relative w-11 h-11 rounded-2xl bg-leather-dark hover:bg-leather-espresso text-leather-cream border border-leather-brass/40 hover:border-leather-brass flex items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-leather-brass shadow-sm active:scale-95"
-              aria-label="سلة التسوق"
+              aria-label={t.navbar.cartTitle}
             >
               <ShoppingBag className="w-5 h-5 text-leather-brass-light" />
               {totalItems > 0 && (
@@ -103,7 +121,7 @@ export const Navbar: React.FC = () => {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden w-11 h-11 rounded-2xl bg-leather-dark/60 text-leather-cream hover:bg-leather-dark border border-leather-dark flex items-center justify-center active:scale-95"
-              aria-label="القائمة الرئيسية"
+              aria-label={t.navbar.menuTitle}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -113,41 +131,55 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-leather-darkest border-b border-leather-dark/80 px-4 pt-3 pb-5 space-y-3 animate-fade-in">
+        <div className="md:hidden bg-leather-darkest border-b border-leather-dark/80 px-4 pt-3 pb-5 space-y-3 animate-fade-in text-left rtl:text-right">
+          <div className="flex items-center justify-between pb-2 border-b border-leather-dark/60">
+            <span className="text-xs text-leather-sand font-bold">{t.navbar.menuTitle}</span>
+            <button
+              onClick={() => {
+                toggleLanguage();
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-leather-espresso border border-leather-brass/40 text-xs font-bold text-leather-brass-light"
+            >
+              <Globe className="w-3.5 h-3.5 text-leather-brass" />
+              <span>{t.navbar.switchLangText}</span>
+            </button>
+          </div>
+
           <a
             href="#hero"
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
-            الرئيسية
+            {t.navbar.home}
           </a>
           <a
             href="#products"
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
-            تفاصيل الحقيبة والألوان
+            {t.navbar.doppKit}
           </a>
           <a
             href="#craftsmanship"
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
-            عن صناعتنا والجلد الطبيعي
+            {t.navbar.craftsmanship}
           </a>
           <a
             href="#testimonials"
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
-            تجارب العملاء
+            {t.navbar.reviews}
           </a>
           <a
             href="#faqs"
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
-            الأسئلة الشائعة والضمان
+            {t.navbar.faqs}
           </a>
           <div className="pt-2">
             <a
@@ -157,7 +189,7 @@ export const Navbar: React.FC = () => {
               className="flex items-center justify-center gap-2 w-full bg-[#25D366] text-white py-2.5 rounded-lg font-bold text-sm shadow-md"
             >
               <MessageCircle className="w-4 h-4 fill-current" />
-              <span>تواصل معنا عبر واتساب الآن</span>
+              <span>{t.navbar.directOrder}</span>
             </a>
           </div>
         </div>

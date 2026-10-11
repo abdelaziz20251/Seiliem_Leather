@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { X, MessageCircle, ShieldCheck, CheckCircle2, AlertCircle, ArrowLeft, Loader2 } from 'lucide-react';
+import { X, MessageCircle, ShieldCheck, CheckCircle2, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import type { CheckoutFormData } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 import { STORE_WHATSAPP_NUMBER } from '../data/products';
+import { EGYPT_GOVERNORATES_BILINGUAL } from '../data/translations';
+import type { CheckoutFormData } from '../types';
 
 export const CheckoutModal: React.FC = () => {
-  const { cart, isCheckoutOpen, setIsCheckoutOpen, totalAmount, clearCart } = useCart();
+  const { cart, totalAmount, isCheckoutOpen, setIsCheckoutOpen, clearCart } = useCart();
+  const { t, language, isRTL, formatPrice } = useLanguage();
 
   const [formData, setFormData] = useState<CheckoutFormData>({
     fullName: '',
     phone: '',
     alternativePhone: '',
-    governorate: 'القاهرة',
+    governorate: language === 'en' ? 'Cairo' : 'القاهرة',
     address: '',
     notes: ''
   });
@@ -23,46 +26,22 @@ export const CheckoutModal: React.FC = () => {
 
   if (!isCheckoutOpen) return null;
 
-  const EGYPT_GOVERNORATES = [
-    'القاهرة',
-    'الجيزة',
-    'الإسكندرية',
-    'القليوبية',
-    'الدقهلية',
-    'الشرقية',
-    'الغربية',
-    'المنوفية',
-    'البحيرة',
-    'كفر الشيخ',
-    'دمياط',
-    'بورسعيد',
-    'الإسماعيلية',
-    'السويس',
-    'الفيوم',
-    'بني سويف',
-    'المنيا',
-    'أسيوط',
-    'سوهاج',
-    'قنا',
-    'الأقصر',
-    'أسوان',
-    'البحر الأحمر',
-    'مطروح',
-    'محافظة أخرى'
-  ];
+  const currentGovernorates = EGYPT_GOVERNORATES_BILINGUAL.map((g) =>
+    language === 'en' ? g.en : g.ar
+  );
 
   const validateForm = () => {
     const errors: Record<string, string> = {};
     if (!formData.fullName.trim()) {
-      errors.fullName = 'يرجى كتابة الاسم بالكامل لتسجيل البوليصة';
+      errors.fullName = t.checkoutModal.errors.nameRequired;
     }
     if (!formData.phone.trim()) {
-      errors.phone = 'رقم الهاتف مطلوب لتواصل مندوب الشحن';
+      errors.phone = t.checkoutModal.errors.phoneRequired;
     } else if (!/^(\+?20|0)?1[0125][0-9]{8}$/.test(formData.phone.replace(/[\s-]/g, ''))) {
-      errors.phone = 'يرجى إدخال رقم هاتف مصري صحيح (مثال: 01012345678)';
+      errors.phone = t.checkoutModal.errors.phoneInvalid;
     }
     if (!formData.address.trim()) {
-      errors.address = 'يرجى إدخال العنوان بالتفصيل (المنطقة، الشارع، العمارة)';
+      errors.address = t.checkoutModal.errors.addressRequired;
     }
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -88,35 +67,35 @@ export const CheckoutModal: React.FC = () => {
 
     setIsSubmitting(true);
 
-    // Formulate products list string according to exact user prompt template
     const productsFormatted = cart
-      .map(
-        (item) =>
-          `- ${item.name} | اللون: ${item.selectedColor.name} | الكمية: ${item.quantity} | السعر: ${(item.price * item.quantity).toLocaleString('ar-EG')} EGP`
-      )
+      .map((item) => {
+        const itemName = language === 'en' ? (item.nameEn || item.name) : item.name;
+        const col = language === 'en' ? (item.selectedColor.nameEn || item.selectedColor.name) : item.selectedColor.name;
+        return `- ${itemName} | ${t.checkoutModal.waColor} ${col} | ${t.checkoutModal.waQty} ${item.quantity} | ${t.checkoutModal.waPrice} ${formatPrice(item.price * item.quantity)}`;
+      })
       .join('\n');
 
     const fullAddress = `${formData.governorate} - ${formData.address.trim()}`;
-    const altPhoneText = formData.alternativePhone.trim() ? ` (هاتف بديل: ${formData.alternativePhone.trim()})` : '';
+    const altPhoneText = formData.alternativePhone.trim()
+      ? `${t.checkoutModal.waAltPhone}${formData.alternativePhone.trim()})`
+      : '';
 
-    // Formulate exact template required by prompt
     const messageTemplate =
-      `🛍️ طلب جديد من Selim Leather\n` +
+      `${t.checkoutModal.waHeader}\n` +
       `--------------------------------\n` +
-      `👤 اسم العميل: ${formData.fullName.trim()}\n` +
-      `📞 الهاتف: ${formData.phone.trim()}${altPhoneText}\n` +
-      `📍 العنوان: ${fullAddress}\n` +
+      `${t.checkoutModal.waClient} ${formData.fullName.trim()}\n` +
+      `${t.checkoutModal.waPhone} ${formData.phone.trim()}${altPhoneText}\n` +
+      `${t.checkoutModal.waAddress} ${fullAddress}\n` +
       `--------------------------------\n` +
-      `📦 المنتجات المطلوبة:\n` +
+      `${t.checkoutModal.waProducts}\n` +
       `${productsFormatted}\n` +
       `--------------------------------\n` +
-      `💰 الإجمالي: ${totalAmount.toLocaleString('ar-EG')} جنيه مصري\n` +
-      `📝 ملاحظات: ${formData.notes.trim() || 'لا توجد ملاحظات إضافية'}`;
+      `${t.checkoutModal.waTotal} ${formatPrice(totalAmount)}\n` +
+      `${t.checkoutModal.waNotes} ${formData.notes.trim() || t.checkoutModal.waNoNotes}`;
 
     const encoded = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(messageTemplate)}`;
     setEncodedUrl(encoded);
 
-    // Brief smooth loading transition before triggering WhatsApp
     setTimeout(() => {
       setIsSubmitting(false);
       setOrderSent(true);
@@ -135,7 +114,7 @@ export const CheckoutModal: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in">
       <div
-        className="relative w-full max-w-2xl bg-leather-darkest border-2 border-leather-brass/40 rounded-3xl overflow-hidden shadow-2xl text-leather-cream text-right my-auto max-h-[94vh] overflow-y-auto"
+        className="relative w-full max-w-2xl bg-leather-darkest border-2 border-leather-brass/40 rounded-3xl overflow-hidden shadow-2xl text-leather-cream text-left rtl:text-right my-auto max-h-[94vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -146,10 +125,10 @@ export const CheckoutModal: React.FC = () => {
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-bold text-leather-cream font-serif">
-                إتمام الطلب وتأكيد الشحن
+                {t.checkoutModal.title}
               </h3>
               <p className="text-xs text-leather-honey font-medium">
-                تأكيد فوري عبر واتساب • الدفع عند الاستلام بعد المعاينة
+                {t.checkoutModal.subtitle}
               </p>
             </div>
           </div>
@@ -157,7 +136,7 @@ export const CheckoutModal: React.FC = () => {
           <button
             onClick={handleClose}
             className="w-10 h-10 rounded-xl bg-leather-dark hover:bg-leather-espresso text-leather-cream border border-leather-dark flex items-center justify-center transition-colors active:scale-90"
-            aria-label="إغلاق نافذة الدفع"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
@@ -172,10 +151,10 @@ export const CheckoutModal: React.FC = () => {
 
             <div className="space-y-2">
               <h4 className="text-xl sm:text-2xl font-black text-leather-cream font-serif">
-                تم تجهيز وإرسال تفاصيل طلبك بنجاح!
+                {t.checkoutModal.successTitle}
               </h4>
               <p className="text-xs sm:text-sm text-leather-parchment/80 max-w-md mx-auto leading-relaxed">
-                تم فتح تطبيق واتساب لإرسال بيانات الطلب إلى خدمة عملاء سليم للجلود. سيتم مراجعة الطلب وتأكيد موعد الشحن فوراً.
+                {t.checkoutModal.successSub}
               </p>
             </div>
 
@@ -188,24 +167,30 @@ export const CheckoutModal: React.FC = () => {
                 className="w-full sm:w-auto min-h-[50px] h-13 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-colors active:scale-95"
               >
                 <MessageCircle className="w-5 h-5 fill-white" />
-                <span>إعادة فتح محادثة واتساب</span>
+                <span>{t.checkoutModal.openWhatsAppBtn}</span>
               </a>
 
               <button
                 onClick={handleClose}
                 className="w-full sm:w-auto min-h-[50px] h-13 px-6 py-3.5 rounded-xl bg-leather-dark hover:bg-leather-espresso text-leather-parchment font-semibold text-sm border border-leather-brass/30 transition-colors"
               >
-                العودة للمتجر وإنهاء
+                {language === 'en' ? 'Return to Store' : 'العودة للمتجر وإنهاء'}
               </button>
             </div>
 
             {/* Order Recap */}
-            <div className="p-4 bg-leather-espresso/70 rounded-2xl border border-leather-dark text-right text-xs space-y-2 max-w-md mx-auto">
-              <div className="font-bold text-leather-sand">ملخص ما تم إرساله:</div>
-              <div className="text-leather-parchment/80">العميل: {formData.fullName} ({formData.phone})</div>
-              <div className="text-leather-parchment/80">العنوان: {formData.governorate} - {formData.address}</div>
+            <div className="p-4 bg-leather-espresso/70 rounded-2xl border border-leather-dark text-left rtl:text-right text-xs space-y-2 max-w-md mx-auto">
+              <div className="font-bold text-leather-sand">
+                {language === 'en' ? 'Order Summary Dispatched:' : 'ملخص ما تم إرساله:'}
+              </div>
+              <div className="text-leather-parchment/80">
+                {formData.fullName} ({formData.phone})
+              </div>
+              <div className="text-leather-parchment/80">
+                {formData.governorate} - {formData.address}
+              </div>
               <div className="text-leather-brass-light font-bold font-mono">
-                الإجمالي: {totalAmount.toLocaleString('ar-EG')} ج.م (شامل المعاينة)
+                {t.checkoutModal.waTotal} {formatPrice(totalAmount)}
               </div>
             </div>
           </div>
@@ -217,15 +202,19 @@ export const CheckoutModal: React.FC = () => {
             <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-leather-espresso/80 border border-leather-brass/30 text-xs text-leather-sand">
               <ShieldCheck className="w-5 h-5 text-emerald-400 flex-shrink-0" />
               <span className="leading-relaxed">
-                <strong>معاينة وفحص 100%:</strong> لا تدفع أي مبالغ الآن، الدفع نقداً عند استلام الطرد وفحصه مع المندوب.
+                {t.checkoutModal.freeInspectionBadge}
               </span>
             </div>
 
             {/* Order Items Preview */}
             <div className="p-4 rounded-2xl bg-leather-dark/70 border border-leather-dark/90 space-y-2.5">
               <div className="text-xs font-bold text-leather-sand mb-1 flex items-center justify-between">
-                <span>المنتجات في الطلب ({cart.length}):</span>
-                <span className="text-[11px] text-leather-parchment/60 font-mono">{totalAmount.toLocaleString('ar-EG')} ج.م</span>
+                <span>
+                  {language === 'en' ? `Items in Order (${cart.length}):` : `المنتجات في الطلب (${cart.length}):`}
+                </span>
+                <span className="text-[11px] text-leather-parchment/60 font-mono">
+                  {formatPrice(totalAmount)}
+                </span>
               </div>
               <div className="max-h-36 overflow-y-auto space-y-2 pr-1">
                 {cart.map((item) => (
@@ -235,37 +224,41 @@ export const CheckoutModal: React.FC = () => {
                         className="w-2.5 h-2.5 rounded-full border border-leather-brass/40 inline-block flex-shrink-0"
                         style={{ backgroundColor: item.selectedColor.code }}
                       />
-                      <span>{item.name}</span>
-                      <span className="text-leather-honey">({item.selectedColor.name})</span>
+                      <span>{language === 'en' ? (item.nameEn || item.name) : item.name}</span>
+                      <span className="text-leather-honey">
+                        ({language === 'en' ? (item.selectedColor.nameEn || item.selectedColor.name) : item.selectedColor.name})
+                      </span>
                       <span className="font-bold text-leather-sand">× {item.quantity}</span>
                     </span>
                     <span className="font-mono text-leather-brass-light font-bold flex-shrink-0">
-                      {(item.price * item.quantity).toLocaleString('ar-EG')} ج.م
+                      {formatPrice(item.price * item.quantity)}
                     </span>
                   </div>
                 ))}
               </div>
               <div className="pt-2.5 border-t border-leather-dark flex justify-between items-center text-xs font-bold">
-                <span className="text-leather-cream font-serif">الإجمالي المطلوب للدفع:</span>
+                <span className="text-leather-cream font-serif">
+                  {language === 'en' ? 'Total Payable upon Delivery:' : 'الإجمالي المطلوب للدفع:'}
+                </span>
                 <span className="text-base sm:text-lg font-black text-leather-brass-light font-mono">
-                  {totalAmount.toLocaleString('ar-EG')} جنيه مصري
+                  {formatPrice(totalAmount)}
                 </span>
               </div>
             </div>
 
-            {/* Form Inputs (Optimized for Mobile with 48px+ Height & 16px Font) */}
+            {/* Form Inputs */}
             <div className="space-y-4">
               {/* Full Name */}
               <div>
                 <label className="block text-xs font-bold text-leather-parchment/90 mb-1.5">
-                  الاسم بالكامل <span className="text-red-400">*</span>
+                  {t.checkoutModal.fullNameLabel}
                 </label>
                 <input
                   type="text"
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  placeholder="مثال: أحمد عبد الله السليم"
+                  placeholder={t.checkoutModal.fullNamePlaceholder}
                   className={`w-full min-h-[48px] h-12 px-4 rounded-xl bg-leather-espresso border text-base sm:text-sm text-leather-cream placeholder-leather-parchment/40 focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors ${
                     formErrors.fullName ? 'border-red-500' : 'border-leather-dark'
                   }`}
@@ -280,20 +273,19 @@ export const CheckoutModal: React.FC = () => {
 
               {/* Phone Numbers Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {/* Phone (Opens Numeric Keypad on Mobile) */}
+                {/* Phone */}
                 <div>
                   <label className="block text-xs font-bold text-leather-parchment/90 mb-1.5">
-                    رقم الهاتف المحمول (واتساب) <span className="text-red-400">*</span>
+                    {t.checkoutModal.phoneLabel}
                   </label>
                   <input
                     type="tel"
                     inputMode="tel"
-                    dir="ltr"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="01012345678"
-                    className={`w-full min-h-[48px] h-12 px-4 rounded-xl bg-leather-espresso border text-base sm:text-sm text-leather-cream text-right placeholder-leather-parchment/40 focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors ${
+                    placeholder={t.checkoutModal.phonePlaceholder}
+                    className={`w-full min-h-[48px] h-12 px-4 rounded-xl bg-leather-espresso border text-base sm:text-sm text-leather-cream placeholder-leather-parchment/40 focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors ${
                       formErrors.phone ? 'border-red-500' : 'border-leather-dark'
                     }`}
                   />
@@ -308,51 +300,52 @@ export const CheckoutModal: React.FC = () => {
                 {/* Alternative Phone */}
                 <div>
                   <label className="block text-xs font-bold text-leather-parchment/90 mb-1.5">
-                    رقم هاتف بديل (اختياري)
+                    {t.checkoutModal.altPhoneLabel}
                   </label>
                   <input
                     type="tel"
                     inputMode="tel"
-                    dir="ltr"
                     name="alternativePhone"
                     value={formData.alternativePhone}
                     onChange={handleInputChange}
-                    placeholder="01XXXXXXXXX"
-                    className="w-full min-h-[48px] h-12 px-4 rounded-xl bg-leather-espresso border border-leather-dark text-base sm:text-sm text-leather-cream text-right placeholder-leather-parchment/40 focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors"
+                    placeholder={t.checkoutModal.altPhonePlaceholder}
+                    className="w-full min-h-[48px] h-12 px-4 rounded-xl bg-leather-espresso border border-leather-dark text-base sm:text-sm text-leather-cream placeholder-leather-parchment/40 focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors"
                   />
                 </div>
               </div>
 
-              {/* Governorate Selection */}
+              {/* Governorate Selector */}
               <div>
                 <label className="block text-xs font-bold text-leather-parchment/90 mb-1.5">
-                  المحافظة <span className="text-red-400">*</span>
+                  {t.checkoutModal.govLabel}
                 </label>
-                <select
-                  name="governorate"
-                  value={formData.governorate}
-                  onChange={handleInputChange}
-                  className="w-full min-h-[48px] h-12 px-4 rounded-xl bg-leather-espresso border border-leather-dark text-base sm:text-sm text-leather-cream focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors"
-                >
-                  {EGYPT_GOVERNORATES.map((gov) => (
-                    <option key={gov} value={gov}>
-                      {gov}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <select
+                    name="governorate"
+                    value={formData.governorate}
+                    onChange={handleInputChange}
+                    className="w-full min-h-[48px] h-12 px-4 rounded-xl bg-leather-espresso border border-leather-dark text-base sm:text-sm text-leather-cream focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors cursor-pointer appearance-none"
+                  >
+                    {currentGovernorates.map((gov) => (
+                      <option key={gov} value={gov} className="bg-leather-espresso text-leather-cream">
+                        {gov}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
-              {/* Detailed Address */}
+              {/* Address */}
               <div>
                 <label className="block text-xs font-bold text-leather-parchment/90 mb-1.5">
-                  العنوان التفصيلي للشحن <span className="text-red-400">*</span>
+                  {t.checkoutModal.addressLabel}
                 </label>
                 <input
                   type="text"
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
-                  placeholder="المنطقة، اسم الشارع، رقم العمارة، رقم الشقة"
+                  placeholder={t.checkoutModal.addressPlaceholder}
                   className={`w-full min-h-[48px] h-12 px-4 rounded-xl bg-leather-espresso border text-base sm:text-sm text-leather-cream placeholder-leather-parchment/40 focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors ${
                     formErrors.address ? 'border-red-500' : 'border-leather-dark'
                   }`}
@@ -368,42 +361,35 @@ export const CheckoutModal: React.FC = () => {
               {/* Notes */}
               <div>
                 <label className="block text-xs font-bold text-leather-parchment/90 mb-1.5">
-                  ملاحظات خاصة بالتسليم أو مواعيد مفضلة (اختياري)
+                  {t.checkoutModal.notesLabel}
                 </label>
                 <textarea
                   name="notes"
-                  rows={2}
                   value={formData.notes}
                   onChange={handleInputChange}
-                  placeholder="مثال: يرجى التوصيل بعد الساعة 4 عصراً، أو الاتصال قبل الحضور بساعة..."
-                  className="w-full p-3 rounded-xl bg-leather-espresso border border-leather-dark text-base sm:text-sm text-leather-cream placeholder-leather-parchment/40 focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors resize-none"
+                  rows={2}
+                  placeholder={t.checkoutModal.notesPlaceholder}
+                  className="w-full p-3.5 rounded-xl bg-leather-espresso border border-leather-dark text-base sm:text-sm text-leather-cream placeholder-leather-parchment/40 focus:outline-none focus:ring-2 focus:ring-leather-brass transition-colors resize-none"
                 />
               </div>
             </div>
 
-            {/* Submit CTA (56px Thumb-Friendly with Loading State) */}
-            <div className="pt-2">
+            {/* Action Buttons */}
+            <div className="pt-2 space-y-3">
               <button
                 type="submit"
-                id="submit-whatsapp-order-btn"
                 disabled={isSubmitting}
-                className="w-full min-h-[56px] h-14 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-800 hover:from-emerald-500 hover:to-emerald-600 text-white font-bold text-base flex items-center justify-center gap-3 shadow-xl shadow-emerald-950/60 transition-all duration-300 active:scale-[0.98] border border-emerald-400/40 disabled:opacity-80"
+                className="w-full min-h-[50px] h-13 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-800 hover:from-emerald-500 hover:to-emerald-600 text-white font-bold text-sm shadow-xl shadow-emerald-950/60 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 border border-emerald-400/40 disabled:opacity-50"
               >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-6 h-6 animate-spin" />
-                    <span>جارِ تجهيز المحادثة والتحويل لواتساب...</span>
-                  </>
-                ) : (
-                  <>
-                    <MessageCircle className="w-6 h-6 fill-white flex-shrink-0" />
-                    <span>تأكيد الطلب عبر واتساب 💬</span>
-                    <ArrowLeft className="w-5 h-5 flex-shrink-0" />
-                  </>
-                )}
+                <MessageCircle className="w-5 h-5 fill-white flex-shrink-0" />
+                <span>
+                  {isSubmitting ? t.checkoutModal.sendingBtn : t.checkoutModal.submitBtn}
+                </span>
+                {isRTL ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
               </button>
-              <p className="text-center text-[11px] text-leather-parchment/70 mt-2.5 font-medium">
-                بالضغط على الزر، سيتم فتح محادثة رسمية مع فريق المبيعات لتأكيد شحنتك وموعد المعاينة.
+
+              <p className="text-[11px] text-center text-leather-sand/70">
+                {t.common.inspectNotice}
               </p>
             </div>
 

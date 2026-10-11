@@ -1,33 +1,11 @@
 import React from 'react';
-import { Award, Compass, Sparkles, Feather } from 'lucide-react';
+import { Award, Compass, Feather, Sparkles } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const CraftsmanshipSection: React.FC = () => {
-  const steps = [
-    {
-      icon: Award,
-      title: 'انتقاء الجلد الطبيعي الكامل (Full-Grain)',
-      description:
-        'نختار الطبقة السطحية العلوية للجلد الطبيعي، وهي الأقوى والأغلى، حيث تحتفظ بمساماتها الطبيعية وتزداد بريقاً وجمالاً (Patina) بمرور السنين بدلاً من أن تتشقق.'
-    },
-    {
-      icon: Compass,
-      title: 'الدباغة النباتية الصديقة للبيئة',
-      description:
-        'تتم دباغة جلودنا بخلاصات نباتية ولحاء الأشجار الطبيعي بعيداً عن الكيماويات الضارة، مما يمنح الجلد رائحته الأصلية الذكية وملمسه الدافئ الفاخر.'
-    },
-    {
-      icon: Feather,
-      title: 'الخياطة اليدوية بخيوط مشمعة',
-      description:
-        'تُثقب القطع يدوياً بدقة متناهية وتُحاك بنمط السراجة المزدوجة بخيوط بوليستر مشمعة تقاوم أعتى قوى الشد، وتضمن عدم انفراط أي غرزة طوال عمر المنتج.'
-    },
-    {
-      icon: Sparkles,
-      title: 'صقل الحواف بشمع العسل الطبيعي',
-      description:
-        'تمر حواف كل قطعة بعدة مراحل من السنفرة والتنعيم ثم تُطلى بشمع العسل العضوي وتُصقل بقطع الخشب الصلب لتصل إلى ملمس ناعم كالحرير يقاوم الرطوبة.'
-    }
-  ];
+  const { t } = useLanguage();
+
+  const stepIcons = [Award, Compass, Feather, Sparkles];
 
   return (
     <section id="craftsmanship" className="py-20 bg-leather-darkest text-leather-cream border-y border-leather-dark relative overflow-hidden">
@@ -39,26 +17,26 @@ export const CraftsmanshipSection: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-leather-espresso border border-leather-brass/30 text-leather-brass-light text-xs font-bold">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>حرفة تتوارثها الأجيال</span>
+            <span>{t.craftsmanship.tag}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-leather-cream font-serif">
-            أسرار الصنعة والجلد الطبيعي الأصيل
+            {t.craftsmanship.title}
           </h2>
 
           <p className="text-sm sm:text-base text-leather-parchment/80 leading-relaxed">
-            في ورشتنا، لا نؤمن بالإنتاج التجاري السريع؛ كل قطعة من سليم للجلود هي عمل فني فريد يستغرق ساعات من التركيز والإتقان اليدوي لنقدم لك رفيقاً يدوم مدى الحياة.
+            {t.craftsmanship.subtitle}
           </p>
         </div>
 
         {/* Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((step, idx) => {
-            const Icon = step.icon;
+          {t.craftsmanship.steps.map((step, idx) => {
+            const Icon = stepIcons[idx] || Award;
             return (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-leather-espresso/80 border border-leather-brass/25 hover:border-leather-brass transition-all duration-300 relative group flex flex-col justify-between"
+                className="p-6 rounded-2xl bg-leather-espresso/80 border border-leather-brass/25 hover:border-leather-brass transition-all duration-300 relative group flex flex-col justify-between text-left rtl:text-right"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
@@ -81,7 +59,7 @@ export const CraftsmanshipSection: React.FC = () => {
 
                 <div className="mt-6 pt-3 border-t border-leather-dark/60 flex items-center gap-2 text-[11px] text-leather-honey font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-leather-brass" />
-                  <span>معايير جودة صارمة</span>
+                  <span>{t.craftsmanship.strictQuality}</span>
                 </div>
               </div>
             );
@@ -89,21 +67,21 @@ export const CraftsmanshipSection: React.FC = () => {
         </div>
 
         {/* Quality Banner */}
-        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-leather-espresso via-leather-dark to-leather-espresso border border-leather-brass/40 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-right">
+        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-leather-espresso via-leather-dark to-leather-espresso border border-leather-brass/40 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left rtl:md:text-right">
           <div className="space-y-1">
             <h4 className="text-lg font-bold text-leather-brass-light font-serif">
-              ضمان سليم الذهبي: افحص بنفسك قبل أن تدفع
+              {t.craftsmanship.goldenGuaranteeTitle}
             </h4>
             <p className="text-xs text-leather-parchment/80">
-              يحق لك إجراء اختبار رائحة الجلد واختبار الملمس مع مندوب التوصيل للتأكد من أصالة الجلد الطبيعي بنسبة 100%.
+              {t.craftsmanship.goldenGuaranteeSub}
             </p>
           </div>
 
           <a
             href="#products"
-            className="px-6 py-3 rounded-xl bg-leather-brass hover:bg-leather-brass-light text-leather-darkest font-bold text-xs shadow-md transition-colors whitespace-nowrap"
+            className="px-6 py-3 rounded-xl bg-leather-brass text-leather-darkest hover:bg-leather-brass-light font-bold text-xs transition-colors shadow-md whitespace-nowrap"
           >
-            تصفح المنتجات المعتمدة
+            {t.common.viewDetails}
           </a>
         </div>
 

@@ -69,6 +69,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             id: product.id,
             uniqueKey,
             name: product.name,
+            nameEn: product.nameEn,
             price: product.price,
             selectedColor,
             quantity,
@@ -78,7 +79,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     });
 
-    showToast(`تمت إضافة "${product.name}" باللون (${selectedColor.name}) إلى سلة التسوق`);
+    const currentLang = localStorage.getItem('selim_leather_lang') || 'en';
+    if (currentLang === 'en') {
+      const pName = product.nameEn || product.name;
+      const cName = selectedColor.nameEn || selectedColor.name;
+      showToast(`Added "${pName}" (${cName}) to cart`);
+    } else {
+      showToast(`تمت إضافة "${product.name}" باللون (${selectedColor.name}) إلى سلة التسوق`);
+    }
   };
 
   const updateQuantity = (uniqueKey: string, quantity: number) => {

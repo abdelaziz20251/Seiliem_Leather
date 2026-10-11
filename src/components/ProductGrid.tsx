@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PRODUCTS, STORE_WHATSAPP_NUMBER } from '../data/products';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import {
   Sparkles,
   ShoppingBag,
@@ -20,6 +21,7 @@ import type { ProductColor } from '../types';
 
 export const ProductGrid: React.FC = () => {
   const { addToCart, setIsCartOpen } = useCart();
+  const { t, language, formatPrice } = useLanguage();
   const product = PRODUCTS[0];
   
   const [selectedColor, setSelectedColor] = useState<ProductColor>(product.colors[0]);
@@ -29,6 +31,12 @@ export const ProductGrid: React.FC = () => {
   const discountPercentage = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
+
+  const currentProductName = language === 'en' ? (product.nameEn || product.name) : product.name;
+  const currentCategoryName = language === 'en' ? (product.categoryNameEn || product.categoryName) : product.categoryName;
+  const currentShortDesc = language === 'en' ? (product.shortDescriptionEn || product.shortDescription) : product.shortDescription;
+  const currentBadge = language === 'en' ? (product.badgeEn || product.badge) : product.badge;
+  const currentColorName = (c: ProductColor) => (language === 'en' ? (c.nameEn || c.name) : c.name);
 
   const handleAddToCart = () => {
     addToCart(product, selectedColor, quantity);
@@ -40,20 +48,27 @@ export const ProductGrid: React.FC = () => {
   };
 
   const directWhatsAppOrder = () => {
+    const colName = currentColorName(selectedColor);
     const text = encodeURIComponent(
-      `مرحباً سليم للجلود، أود طلب الحقيبة التالية مباشرة:\n` +
-      `📦 ${product.name}\n` +
-      `🎨 اللون المختار: ${selectedColor.name}\n` +
-      `🔢 الكمية: ${quantity}\n` +
-      `💰 الإجمالي: ${(product.price * quantity).toLocaleString('ar-EG')} ج.م\n` +
-      `📍 برجاء إفادتي بميعاد التوصيل والمعاينة مع المندوب.`
+      language === 'en'
+        ? `Hello Selim Leather, I would like to order:\n` +
+          `📦 ${currentProductName}\n` +
+          `🎨 Selected Color: ${colName}\n` +
+          `🔢 Quantity: ${quantity}\n` +
+          `💰 Total: ${formatPrice(product.price * quantity)}\n` +
+          `📍 Please let me know delivery and courier inspection details.`
+        : `مرحباً سليم للجلود، أود طلب الحقيبة التالية مباشرة:\n` +
+          `📦 ${currentProductName}\n` +
+          `🎨 اللون المختار: ${colName}\n` +
+          `🔢 الكمية: ${quantity}\n` +
+          `💰 الإجمالي: ${formatPrice(product.price * quantity)}\n` +
+          `📍 برجاء إفادتي بميعاد التوصيل والمعاينة مع المندوب.`
     );
     window.open(`https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${text}`, '_blank');
   };
 
   const handleSelectColorCard = (color: ProductColor) => {
     setSelectedColor(color);
-    // Smooth scroll to top of showcase on mobile
     const showcaseElem = document.getElementById('product-showcase');
     if (showcaseElem) {
       showcaseElem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -68,15 +83,15 @@ export const ProductGrid: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-leather-parchment border border-leather-brass/30 text-leather-cognac text-xs sm:text-sm font-bold shadow-sm">
             <Sparkles className="w-4 h-4 text-leather-brass" />
-            <span>القطعة الحرفية الأيقونية لعام 2026</span>
+            <span>{t.productShowcase.tag}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-leather-espresso font-serif">
-            حقيبة المستلزمات واليد الفاخرة
+            {t.productShowcase.title}
           </h2>
 
           <p className="text-sm sm:text-base text-leather-dark/80 leading-relaxed">
-            صُممت بعناية فائقة لتكون رفيقك الدائم في يومك وسفرك. مقتنى كلاسيكي من الجلد الطبيعي البقري 100% بنمط Crazy Horse يجمع بين متانة الحرفة وسحر العتاقة المتجدد.
+            {t.productShowcase.subtitle}
           </p>
         </div>
 
@@ -87,14 +102,14 @@ export const ProductGrid: React.FC = () => {
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             
-            {/* Visuals Gallery (Right in RTL - 7 Cols on LG) */}
+            {/* Visuals Gallery (7 Cols on LG) */}
             <div className="lg:col-span-7 space-y-4">
               {/* Main Active Image Display */}
               <div className="relative h-80 sm:h-[430px] w-full rounded-2xl overflow-hidden bg-leather-darkest border border-leather-brass/40 shadow-inner group">
                 <img
                   key={selectedColor.image}
                   src={selectedColor.image}
-                  alt={`${product.name} - ${selectedColor.name}`}
+                  alt={`${currentProductName} - ${currentColorName(selectedColor)}`}
                   className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-all duration-500 ease-out animate-fade-in"
                 />
 
@@ -104,11 +119,11 @@ export const ProductGrid: React.FC = () => {
                 {/* Floating Top Badges */}
                 <div className="absolute top-4 right-4 flex flex-col gap-2 items-end z-10">
                   <span className="bg-gradient-to-r from-leather-brass to-leather-brass-light text-leather-darkest text-xs font-black px-3.5 py-1.5 rounded-full shadow-lg">
-                    {product.badge}
+                    {currentBadge}
                   </span>
                   {discountPercentage > 0 && (
                     <span className="bg-red-800/95 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                      خصم {discountPercentage}%
+                      -{discountPercentage}%
                     </span>
                   )}
                 </div>
@@ -116,7 +131,7 @@ export const ProductGrid: React.FC = () => {
                 {/* Inspection Guarantee Tag */}
                 <div className="absolute top-4 left-4 bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>معاينة حرة قبل الدفع</span>
+                  <span>{t.common.inspectBadge}</span>
                 </div>
 
                 {/* Color Label Overlay on Image */}
@@ -127,11 +142,11 @@ export const ProductGrid: React.FC = () => {
                       style={{ backgroundColor: selectedColor.code }}
                     />
                     <span className="text-xs sm:text-sm font-bold text-leather-cream">
-                      اللون المعروض: {selectedColor.name}
+                      {t.productShowcase.selectedColorLabel} {currentColorName(selectedColor)}
                     </span>
                   </div>
                   <span className="text-[11px] text-leather-honey font-semibold">
-                    جلد طبيعي Crazy Horse
+                    {t.productShowcase.genuineTag}
                   </span>
                 </div>
               </div>
@@ -141,9 +156,9 @@ export const ProductGrid: React.FC = () => {
                 <div className="flex items-center justify-between text-xs text-leather-sand">
                   <span className="font-semibold flex items-center gap-1.5">
                     <Palette className="w-3.5 h-3.5 text-leather-brass" />
-                    اضغط على أي لون للتبديل الفوري للصورة:
+                    {t.productShowcase.switchPrompt}
                   </span>
-                  <span className="text-leather-honey">4 ألوان أصلية</span>
+                  <span className="text-leather-honey">{t.productShowcase.colorsCount}</span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -153,7 +168,7 @@ export const ProductGrid: React.FC = () => {
                       <button
                         key={color.name}
                         onClick={() => setSelectedColor(color)}
-                        className={`flex items-center gap-2.5 p-2 rounded-xl text-right transition-all duration-200 border text-xs ${
+                        className={`flex items-center gap-2.5 p-2 rounded-xl text-left rtl:text-right transition-all duration-200 border text-xs ${
                           isSelected
                             ? 'bg-leather-darkest border-leather-brass ring-2 ring-leather-brass shadow-lg'
                             : 'bg-leather-espresso/80 border-leather-brass/30 hover:border-leather-brass/70 hover:bg-leather-dark/60 text-leather-parchment'
@@ -161,12 +176,12 @@ export const ProductGrid: React.FC = () => {
                       >
                         <img
                           src={color.image}
-                          alt={color.name}
+                          alt={currentColorName(color)}
                           className="w-11 h-11 rounded-lg object-cover flex-shrink-0 border border-leather-brass/30"
                         />
                         <div className="flex-grow min-w-0">
                           <div className="font-bold text-[11px] sm:text-xs truncate text-leather-cream">
-                            {color.name.split(' (')[0]}
+                            {currentColorName(color).split(' (')[0]}
                           </div>
                           <div className="flex items-center gap-1 mt-0.5">
                             <span
@@ -174,7 +189,7 @@ export const ProductGrid: React.FC = () => {
                               style={{ backgroundColor: color.code }}
                             />
                             <span className="text-[10px] text-leather-honey">
-                              {isSelected ? 'محدد' : 'عرض'}
+                              {isSelected ? t.productShowcase.selected : t.productShowcase.preview}
                             </span>
                           </div>
                         </div>
@@ -185,13 +200,13 @@ export const ProductGrid: React.FC = () => {
               </div>
             </div>
 
-            {/* Product Details & Actions (Left in RTL - 5 Cols on LG) */}
-            <div className="lg:col-span-5 space-y-6 text-right">
+            {/* Product Details & Actions (5 Cols on LG) */}
+            <div className="lg:col-span-5 space-y-6 text-left rtl:text-right">
               
               {/* Category & Rating */}
               <div className="flex items-center justify-between border-b border-leather-dark pb-3">
                 <span className="text-xs font-bold text-leather-honey bg-leather-darkest px-3 py-1 rounded-full border border-leather-brass/30">
-                  {product.categoryName}
+                  {currentCategoryName}
                 </span>
 
                 <div className="flex items-center gap-1.5 text-leather-brass">
@@ -201,42 +216,44 @@ export const ProductGrid: React.FC = () => {
                     ))}
                   </div>
                   <span className="font-bold text-xs text-leather-cream">{product.rating}</span>
-                  <span className="text-leather-parchment/70 text-[11px]">({product.reviewsCount} تقييم موثق)</span>
+                  <span className="text-leather-parchment/70 text-[11px]">
+                    ({product.reviewsCount} {t.common.ratingSuffix})
+                  </span>
                 </div>
               </div>
 
               {/* Title & Subtitle */}
               <div>
                 <h3 className="text-2xl sm:text-3xl font-black text-leather-cream font-serif leading-tight">
-                  {product.name}
+                  {currentProductName}
                 </h3>
                 <p className="text-xs sm:text-sm text-leather-parchment/80 mt-2 leading-relaxed font-normal">
-                  {product.shortDescription}
+                  {currentShortDesc}
                 </p>
               </div>
 
               {/* Price Block */}
               <div className="bg-leather-darkest/90 border border-leather-brass/30 rounded-2xl p-4 flex items-center justify-between">
                 <div>
-                  <div className="text-[11px] text-leather-sand font-medium">السعر بعد الخصم:</div>
+                  <div className="text-[11px] text-leather-sand font-medium">{t.productShowcase.afterDiscount}</div>
                   <div className="flex items-baseline gap-2 mt-0.5">
                     <span className="text-2xl sm:text-3xl font-black text-leather-brass-light font-mono">
-                      {product.price.toLocaleString('ar-EG')} ج.م
+                      {formatPrice(product.price)}
                     </span>
                     {product.originalPrice && (
                       <span className="text-sm text-leather-parchment/60 line-through font-mono">
-                        {product.originalPrice.toLocaleString('ar-EG')} ج.م
+                        {formatPrice(product.originalPrice)}
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="text-left">
+                <div className="text-right rtl:text-left">
                   <span className="inline-block bg-emerald-950/80 text-emerald-300 text-xs font-bold px-3 py-1 rounded-lg border border-emerald-500/40">
-                    وفر {(product.originalPrice! - product.price).toLocaleString('ar-EG')} ج.م
+                    {t.common.save} {formatPrice(product.originalPrice! - product.price)}
                   </span>
                   <span className="block text-[10px] text-leather-sand/70 mt-1">
-                    شحن لجميع المحافظات
+                    {t.productShowcase.freeShippingNotice}
                   </span>
                 </div>
               </div>
@@ -244,8 +261,8 @@ export const ProductGrid: React.FC = () => {
               {/* Color Swatch Selection */}
               <div className="space-y-2">
                 <label className="text-xs font-bold text-leather-sand flex items-center justify-between">
-                  <span>اللون المختار للطلب:</span>
-                  <span className="text-leather-brass-light font-bold">{selectedColor.name}</span>
+                  <span>{t.productShowcase.chooseColorForOrder}</span>
+                  <span className="text-leather-brass-light font-bold">{currentColorName(selectedColor)}</span>
                 </label>
                 <div className="flex flex-wrap items-center gap-3">
                   {product.colors.map((color) => {
@@ -264,7 +281,7 @@ export const ProductGrid: React.FC = () => {
                           className="w-3.5 h-3.5 rounded-full border border-white/50"
                           style={{ backgroundColor: color.code }}
                         />
-                        <span>{color.name.split(' (')[0]}</span>
+                        <span>{currentColorName(color).split(' (')[0]}</span>
                         {isSelected && <Check className="w-3.5 h-3.5 text-leather-brass" />}
                       </button>
                     );
@@ -276,13 +293,12 @@ export const ProductGrid: React.FC = () => {
               <div className="bg-leather-dark/40 border border-leather-brass/20 rounded-xl p-3.5 space-y-2 text-xs text-leather-parchment">
                 <div className="font-bold text-leather-sand flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-leather-brass" />
-                  <span>المواصفات الحرفية للحقيبة:</span>
+                  <span>{t.productShowcase.specsTitle}</span>
                 </div>
-                <ul className="space-y-1.5 text-[11px] sm:text-xs pr-4 list-disc text-leather-parchment/90">
-                  <li>جلد بقري طبيعي 100% بنمط Crazy Horse المعتق.</li>
-                  <li>سحاب نحاسي عريض متين مع مقبض يد جلدي جانبي مقوى.</li>
-                  <li>حجم فسيح (25×12×11 سم) يتسع لأدوات الحلاقة، العطور، والهواتف.</li>
-                  <li>خياطة مشمعة يدوية فائقة القوة ومقاومة للاهتراء.</li>
+                <ul className="space-y-1.5 text-[11px] sm:text-xs pl-4 rtl:pl-0 rtl:pr-4 list-disc text-leather-parchment/90">
+                  {t.productShowcase.specs.map((spec, i) => (
+                    <li key={i}>{spec}</li>
+                  ))}
                 </ul>
               </div>
 
@@ -294,7 +310,7 @@ export const ProductGrid: React.FC = () => {
                     <button
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                       className="w-9 h-9 rounded-lg hover:bg-leather-dark text-leather-parchment flex items-center justify-center transition-colors active:scale-95"
-                      aria-label="إنقاص الكمية"
+                      aria-label="Decrease quantity"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
@@ -304,7 +320,7 @@ export const ProductGrid: React.FC = () => {
                     <button
                       onClick={() => setQuantity((q) => q + 1)}
                       className="w-9 h-9 rounded-lg hover:bg-leather-dark text-leather-parchment flex items-center justify-center transition-colors active:scale-95"
-                      aria-label="زيادة الكمية"
+                      aria-label="Increase quantity"
                     >
                       <Plus className="w-4 h-4" />
                     </button>
@@ -323,12 +339,12 @@ export const ProductGrid: React.FC = () => {
                     {isAddedFeedback ? (
                       <>
                         <Check className="w-5 h-5 text-white" />
-                        <span>تمت الإضافة للسلة بنجاح!</span>
+                        <span>{t.productShowcase.addedBtn}</span>
                       </>
                     ) : (
                       <>
                         <ShoppingBag className="w-5 h-5" />
-                        <span>أضف إلى السلة ({((product.price * quantity)).toLocaleString('ar-EG')} ج.م)</span>
+                        <span>{t.productShowcase.addToCartBtn(product.price * quantity)}</span>
                       </>
                     )}
                   </button>
@@ -341,7 +357,7 @@ export const ProductGrid: React.FC = () => {
                   className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-leather-darkest hover:bg-leather-dark text-leather-cream hover:text-white font-bold text-sm border border-leather-brass/40 hover:border-leather-brass transition-all duration-300 shadow-md active:scale-95"
                 >
                   <MessageCircle className="w-5 h-5 text-[#25D366] fill-[#25D366]" />
-                  <span>طلب فوري مباشر عبر واتساب (معاينة قبل الدفع)</span>
+                  <span>{t.productShowcase.directWhatsAppBtn}</span>
                 </button>
               </div>
 
@@ -349,15 +365,15 @@ export const ProductGrid: React.FC = () => {
               <div className="grid grid-cols-3 gap-2 pt-2 border-t border-leather-dark text-center text-[10px] sm:text-[11px] text-leather-sand">
                 <div className="p-2 rounded-lg bg-leather-darkest/60 border border-leather-brass/20 flex flex-col items-center gap-1">
                   <ShieldCheck className="w-4 h-4 text-leather-brass" />
-                  <span>معاينة وفحص 100%</span>
+                  <span>{t.productShowcase.badge1}</span>
                 </div>
                 <div className="p-2 rounded-lg bg-leather-darkest/60 border border-leather-brass/20 flex flex-col items-center gap-1">
                   <Truck className="w-4 h-4 text-leather-brass" />
-                  <span>شحن سريع للمحافظات</span>
+                  <span>{t.productShowcase.badge2}</span>
                 </div>
                 <div className="p-2 rounded-lg bg-leather-darkest/60 border border-leather-brass/20 flex flex-col items-center gap-1">
                   <RotateCcw className="w-4 h-4 text-leather-brass" />
-                  <span>ضمان صيانة عام كامل</span>
+                  <span>{t.productShowcase.badge3}</span>
                 </div>
               </div>
 
@@ -370,10 +386,10 @@ export const ProductGrid: React.FC = () => {
         <div className="space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h3 className="text-2xl sm:text-3xl font-black text-leather-espresso font-serif">
-              استكشف درجات الألوان الأربعة الفاخرة
+              {t.productShowcase.colorsGridTitle}
             </h3>
             <p className="text-xs sm:text-sm text-leather-dark/75">
-              كل لون تم اختياره وصباغته بعناية فائقة ليعكس شخصيتك، والجلد الطبيعي يكتسب بريقاً ساحراً وعتاقة أجمل مع مرور الوقت.
+              {t.productShowcase.colorsGridSub}
             </p>
           </div>
 
@@ -394,30 +410,30 @@ export const ProductGrid: React.FC = () => {
                   <div className="relative h-60 w-full overflow-hidden bg-leather-parchment/40">
                     <img
                       src={color.image}
-                      alt={color.name}
+                      alt={currentColorName(color)}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
 
                     {/* Badge */}
                     <div className="absolute top-3 right-3 bg-leather-darkest/85 backdrop-blur-md text-leather-sand text-[10px] font-bold px-2.5 py-1 rounded-full border border-leather-brass/30">
-                      خيار #{index + 1}
+                      {t.productShowcase.colorCardBadge(index)}
                     </div>
 
                     {isSelected && (
                       <div className="absolute top-3 left-3 bg-leather-brass text-leather-darkest text-[11px] font-black px-2.5 py-1 rounded-full shadow flex items-center gap-1">
                         <Check className="w-3 h-3" />
-                        <span>محدد الآن</span>
+                        <span>{t.productShowcase.selectedNow}</span>
                       </div>
                     )}
                   </div>
 
                   {/* Card Content */}
-                  <div className="p-4 space-y-3 text-right flex-grow flex flex-col justify-between">
+                  <div className="p-4 space-y-3 text-left rtl:text-right flex-grow flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-[11px] text-leather-cognac font-bold">
-                          جلد Crazy Horse أصلي
+                          {t.productShowcase.genuineTag}
                         </span>
                         <span
                           className="w-3.5 h-3.5 rounded-full border border-gray-300 shadow-sm"
@@ -425,7 +441,7 @@ export const ProductGrid: React.FC = () => {
                         />
                       </div>
                       <h4 className="text-sm font-bold text-leather-espresso font-serif group-hover:text-leather-cognac transition-colors">
-                        {color.name}
+                        {currentColorName(color)}
                       </h4>
                     </div>
 
@@ -444,10 +460,10 @@ export const ProductGrid: React.FC = () => {
                       {isSelected ? (
                         <>
                           <Check className="w-3.5 h-3.5 text-leather-brass" />
-                          <span>اللون النشط في المعاينة</span>
+                          <span>{t.productShowcase.activeInPreview}</span>
                         </>
                       ) : (
-                        <span>اختر هذا اللون للمعاينة والطلب</span>
+                        <span>{t.productShowcase.selectThisColor}</span>
                       )}
                     </button>
                   </div>
@@ -458,30 +474,32 @@ export const ProductGrid: React.FC = () => {
         </div>
 
         {/* Bottom Reassurance Banner */}
-        <div className="mt-16 bg-gradient-to-r from-leather-parchment via-white to-leather-parchment border border-leather-brass/30 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-right shadow-sm">
+        <div className="mt-16 bg-gradient-to-r from-leather-parchment via-white to-leather-parchment border border-leather-brass/30 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left rtl:md:text-right shadow-sm">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-leather-espresso flex items-center justify-center text-leather-brass-light flex-shrink-0">
               <Layers className="w-6 h-6" />
             </div>
             <div>
               <h4 className="text-base font-bold text-leather-espresso font-serif">
-                هل تبحث عن حفر اسم أو إهداء خاص على الحقيبة؟
+                {t.productShowcase.engravingTitle}
               </h4>
               <p className="text-xs text-leather-dark/75 mt-0.5">
-                نوفر خدمة الحفر الدقيق بالليزر للأسماء والحروف الأولى للشركات والإهداءات الشخصية عبر واتساب.
+                {t.productShowcase.engravingSub}
               </p>
             </div>
           </div>
 
           <a
             href={`https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(
-              'مرحباً سليم للجلود، أود الاستفسار عن خدمة حفر الأسماء والإهداءات على حقيبة The Artisan Dopp Kit.'
+              language === 'en'
+                ? 'Hello Selim Leather, I would like to inquire about custom laser engraving on The Artisan Dopp Kit.'
+                : 'مرحباً سليم للجلود، أود الاستفسار عن خدمة حفر الأسماء والإهداءات على حقيبة The Artisan Dopp Kit.'
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 rounded-xl bg-leather-espresso hover:bg-leather-dark text-leather-cream text-xs font-bold transition-colors border border-leather-brass/40 shadow"
+            className="px-6 py-3 rounded-xl bg-leather-espresso hover:bg-leather-dark text-leather-cream text-xs font-bold transition-colors border border-leather-brass/40 shadow whitespace-nowrap"
           >
-            تحدث مع الحِرفي في واتساب
+            {t.productShowcase.talkToArtisan}
           </a>
         </div>
 

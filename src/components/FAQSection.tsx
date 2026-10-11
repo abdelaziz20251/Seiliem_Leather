@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
-import { FAQS } from '../data/products';
+import { useLanguage } from '../context/LanguageContext';
 
 export const FAQSection: React.FC = () => {
+  const { t } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (idx: number) => {
@@ -17,21 +18,21 @@ export const FAQSection: React.FC = () => {
         <div className="text-center space-y-3 mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-leather-dark border border-leather-brass/30 text-leather-sand text-xs font-bold">
             <HelpCircle className="w-3.5 h-3.5 text-leather-brass" />
-            <span>إجابات واضحة لراحتك</span>
+            <span>{t.faqs.tag}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-black text-leather-cream font-serif">
-            الأسئلة الشائعة وسياسة الشراء
+            {t.faqs.title}
           </h2>
 
           <p className="text-xs sm:text-sm text-leather-parchment/70">
-            كل ما تحتاج لمعرفته حول المعاينة، نوع الجلد، الشحن، والضمان قبل تأكيد طلبك.
+            {t.faqs.subtitle}
           </p>
         </div>
 
         {/* Accordions */}
         <div className="space-y-3">
-          {FAQS.map((faq, idx) => {
+          {t.faqs.items.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
@@ -41,7 +42,7 @@ export const FAQSection: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full p-5 text-right flex items-center justify-between gap-4 hover:bg-leather-dark/40 transition-colors"
+                  className="w-full p-5 text-left rtl:text-right flex items-center justify-between gap-4 hover:bg-leather-dark/40 transition-colors"
                 >
                   <span className="text-sm sm:text-base font-bold text-leather-cream font-serif">
                     {faq.question}
@@ -56,7 +57,7 @@ export const FAQSection: React.FC = () => {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-leather-parchment/80 leading-relaxed border-t border-leather-dark/60 animate-fade-in">
+                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-leather-parchment/80 leading-relaxed border-t border-leather-dark/60 animate-fade-in text-left rtl:text-right">
                     {faq.answer}
                   </div>
                 )}

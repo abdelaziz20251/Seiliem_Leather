@@ -17,11 +17,14 @@ export const PRODUCTS: Product[] = [
   {
     id: 'selim-artisan-dopp-kit',
     name: 'حقيبة اليد والمستلزمات الفاخرة «The Artisan Dopp Kit»',
+    nameEn: 'The Artisan Leather Dopp Kit',
     category: 'dopp-kit',
     categoryName: 'حقائب يد ومستلزمات شخصية',
+    categoryNameEn: 'Leather Dopp Kits & Travel Pouches',
     price: 890,
     originalPrice: 1150,
     shortDescription: 'حقيبة يد ومستلزمات شخصية كلاسيكية مصنوعة يدوياً من جلد بقري طبيعي 100% بتشطيب Crazy Horse المعتق. مصممة لتنظيم أدوات العناية الشخصية، الحلاقة، العطور، والهواتف مع سحاب نحاسي عريض ومقبض يد جانبي متين.',
+    shortDescriptionEn: 'A mastercrafted personal dopp kit & travel pouch made from 100% full-grain Crazy Horse cowhide. Designed to organize your grooming essentials, perfumes, and daily tech with a heavy-duty antique brass zipper and a reinforced side carry handle.',
     details: [
       'جلد بقري طبيعي 100% مدبوغ نباتياً بنمط (Crazy Horse Pull-Up) يكتسب عتاقة وبريقاً ساحراً مع الاستخدام',
       'سحاب نحاسي عريض متين للغاية ومقاوم للصدأ يفتح بسلاسة عبر كامل طول الحقيبة',
@@ -31,28 +34,42 @@ export const PRODUCTS: Product[] = [
       'خياطة يدوية دقيقة بخيوط مشمعة معالجة فائقة القوة ومقاومة للاهتراء',
       'الأبعاد التقريبية: 25 سم طول × 12 سم ارتفاع × 11 سم عرض'
     ],
+    detailsEn: [
+      '100% full-grain vegetable-tanned cowhide (Crazy Horse Pull-Up) that develops an exquisite vintage patina with time.',
+      'Heavy-duty antique brass zipper with smooth full-length opening for easy reach.',
+      'Reinforced genuine leather side handle for effortless daily carrying and bathroom hanging.',
+      'Side leather pull tab with solid antique brass D-ring for quick and easy zip action.',
+      'Spacious volume (approx. 25 × 12 × 11 cm) accommodating grooming kits, perfumes, phones, and chargers.',
+      'Heavy-duty hand-stitched seams using bonded waxed threads resistant to moisture and wear.',
+      'Dimensions: approx. 25 cm Length × 12 cm Height × 11 cm Width'
+    ],
     featured: true,
     badge: 'إصدار حرفي حصري',
+    badgeEn: 'Artisan Signature Edition',
     rating: 4.9,
     reviewsCount: 128,
     colors: [
       {
         name: 'بني عسلي معتق (Vintage Brown)',
+        nameEn: 'Vintage Crazy Horse Brown',
         code: '#6E4E37',
         image: '/products/vintage-brown.jpeg'
       },
       {
         name: 'بني شوكولاتة داكن (Dark Chocolate)',
+        nameEn: 'Dark Chocolate Espresso',
         code: '#453227',
         image: '/products/dark-chocolate.jpeg'
       },
       {
         name: 'أخضر زيتي ملكي (Olive Green)',
+        nameEn: 'Vintage Olive Green',
         code: '#494E38',
         image: '/products/olive-green.jpeg'
       },
       {
         name: 'هافان جملي دافئ (Classic Tan)',
+        nameEn: 'Classic Camel Tan',
         code: '#A95E2B',
         image: '/products/camel-tan.jpeg'
       }

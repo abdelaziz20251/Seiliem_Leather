@@ -26,8 +26,9 @@ export default {
         }
       },
       fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'Cairo', 'sans-serif'],
+        serif: ['Cinzel', 'Cairo', 'serif'],
         cairo: ['Cairo', 'sans-serif'],
-        display: ['Cairo', 'serif'],
       },
       boxShadow: {
         'leather': '0 10px 30px -10px rgba(31, 21, 15, 0.15)',

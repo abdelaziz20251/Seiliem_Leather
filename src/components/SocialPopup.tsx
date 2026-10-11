@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, MessageCircle, ArrowLeft, Check } from 'lucide-react';
+import { X, Sparkles, MessageCircle, ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { InstagramIcon, FacebookIcon, TikTokIcon } from './SocialIcons';
 import { SOCIAL_LINKS, STORE_PHONE_DISPLAY } from '../data/products';
+import { useLanguage } from '../context/LanguageContext';
 
 export const SocialPopup: React.FC = () => {
+  const { language, isRTL, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [dontShowAgain, setDontShowAgain] = useState(false);
 
@@ -28,13 +30,15 @@ export const SocialPopup: React.FC = () => {
 
   if (!isOpen) return null;
 
+  const DirectionalArrow = isRTL ? ArrowLeft : ArrowRight;
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fade-in">
       {/* Click outside backdrop */}
       <div className="fixed inset-0" onClick={handleClose} />
 
       <div
-        className="relative w-full max-w-lg bg-gradient-to-b from-leather-espresso via-leather-darkest to-leather-espresso border-2 border-leather-brass/40 rounded-3xl overflow-hidden shadow-2xl text-leather-cream text-right p-6 sm:p-8 my-8 z-10 transform transition-all duration-300 animate-fade-in"
+        className={`relative w-full max-w-lg bg-gradient-to-b from-leather-espresso via-leather-darkest to-leather-espresso border-2 border-leather-brass/40 rounded-3xl overflow-hidden shadow-2xl text-leather-cream ${isRTL ? 'text-right' : 'text-left'} p-6 sm:p-8 my-8 z-10 transform transition-all duration-300 animate-fade-in`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Subtle decorative glow */}
@@ -44,8 +48,8 @@ export const SocialPopup: React.FC = () => {
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 left-4 p-2 rounded-full bg-leather-dark/90 hover:bg-leather-espresso text-leather-parchment/70 hover:text-white border border-leather-brass/30 transition-colors"
-          aria-label="إغلاق النافذة"
+          className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} p-2 rounded-full bg-leather-dark/90 hover:bg-leather-espresso text-leather-parchment/70 hover:text-white border border-leather-brass/30 transition-colors`}
+          aria-label={language === 'en' ? 'Close dialog' : 'إغلاق النافذة'}
         >
           <X className="w-5 h-5" />
         </button>
@@ -58,15 +62,15 @@ export const SocialPopup: React.FC = () => {
 
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-leather-dark/80 border border-leather-brass/30 text-leather-sand text-[11px] font-bold">
             <Sparkles className="w-3.5 h-3.5 text-leather-brass" />
-            <span>مجتمع سليم للجلود الطبيعية</span>
+            <span>{t.socialPopup.badge}</span>
           </div>
 
           <h3 className="text-xl sm:text-2xl font-black text-leather-cream font-serif">
-            يسعدنا انضمامك إلى عائلتنا!
+            {t.socialPopup.title}
           </h3>
 
           <p className="text-xs sm:text-sm text-leather-parchment/80 leading-relaxed max-w-sm mx-auto">
-            تابعنا على منصات التواصل الاجتماعي لتكون أول من يشاهد أحدث تشكيلاتنا الجلدية اليدوية، كواليس الورشة، وعروضنا الحصرية ✨
+            {t.socialPopup.description}
           </p>
         </div>
 
@@ -83,18 +87,18 @@ export const SocialPopup: React.FC = () => {
               <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shadow-md flex-shrink-0">
                 <InstagramIcon className="w-6 h-6 stroke-[2]" />
               </div>
-              <div className="text-right">
+              <div className={isRTL ? 'text-right' : 'text-left'}>
                 <div className="text-xs font-bold text-leather-cream group-hover:text-pink-300 transition-colors">
-                  انستجرام (Instagram)
+                  {language === 'en' ? 'Instagram' : 'انستجرام (Instagram)'}
                 </div>
                 <div className="text-[11px] text-leather-parchment/60 font-mono" dir="ltr">
                   @selim.leather
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-xs font-bold text-pink-400 group-hover:-translate-x-1 transition-transform">
-              <span>متابعة</span>
-              <ArrowLeft className="w-4 h-4" />
+            <div className={`flex items-center gap-1 text-xs font-bold text-pink-400 ${isRTL ? 'group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`}>
+              <span>{t.socialPopup.follow}</span>
+              <DirectionalArrow className="w-4 h-4" />
             </div>
           </a>
 
@@ -109,18 +113,18 @@ export const SocialPopup: React.FC = () => {
               <div className="w-11 h-11 rounded-xl bg-[#1877F2] flex items-center justify-center text-white shadow-md flex-shrink-0">
                 <FacebookIcon className="w-6 h-6 fill-current" />
               </div>
-              <div className="text-right">
+              <div className={isRTL ? 'text-right' : 'text-left'}>
                 <div className="text-xs font-bold text-leather-cream group-hover:text-blue-300 transition-colors">
-                  فيسبوك (Facebook)
+                  {language === 'en' ? 'Facebook' : 'فيسبوك (Facebook)'}
                 </div>
                 <div className="text-[11px] text-leather-parchment/60 font-serif">
-                  Selim Leather - سليم للجلود
+                  {language === 'en' ? 'Selim Leather Official' : 'Selim Leather - سليم للجلود'}
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-xs font-bold text-blue-400 group-hover:-translate-x-1 transition-transform">
-              <span>إعجاب</span>
-              <ArrowLeft className="w-4 h-4" />
+            <div className={`flex items-center gap-1 text-xs font-bold text-blue-400 ${isRTL ? 'group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`}>
+              <span>{t.socialPopup.like}</span>
+              <DirectionalArrow className="w-4 h-4" />
             </div>
           </a>
 
@@ -135,18 +139,18 @@ export const SocialPopup: React.FC = () => {
               <div className="w-11 h-11 rounded-xl bg-black border border-white/20 flex items-center justify-center text-white shadow-md flex-shrink-0">
                 <TikTokIcon className="w-5 h-5 text-cyan-400" />
               </div>
-              <div className="text-right">
+              <div className={isRTL ? 'text-right' : 'text-left'}>
                 <div className="text-xs font-bold text-leather-cream group-hover:text-cyan-300 transition-colors">
-                  تيك توك (TikTok)
+                  {language === 'en' ? 'TikTok' : 'تيك توك (TikTok)'}
                 </div>
                 <div className="text-[11px] text-leather-parchment/60 font-mono" dir="ltr">
                   @seliem.handmade.leather
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-xs font-bold text-cyan-400 group-hover:-translate-x-1 transition-transform">
-              <span>فيديوهات الورشة</span>
-              <ArrowLeft className="w-4 h-4" />
+            <div className={`flex items-center gap-1 text-xs font-bold text-cyan-400 ${isRTL ? 'group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`}>
+              <span>{t.socialPopup.workshopVideos}</span>
+              <DirectionalArrow className="w-4 h-4" />
             </div>
           </a>
 
@@ -161,18 +165,18 @@ export const SocialPopup: React.FC = () => {
               <div className="w-11 h-11 rounded-xl bg-[#25D366] flex items-center justify-center text-white shadow-md flex-shrink-0">
                 <MessageCircle className="w-6 h-6 fill-current" />
               </div>
-              <div className="text-right">
+              <div className={isRTL ? 'text-right' : 'text-left'}>
                 <div className="text-xs font-bold text-leather-cream group-hover:text-emerald-300 transition-colors">
-                  واتساب المباشر (WhatsApp)
+                  {language === 'en' ? 'WhatsApp Direct' : 'واتساب المباشر (WhatsApp)'}
                 </div>
-                <div className="text-[11px] text-leather-honey font-mono">
+                <div className="text-[11px] text-leather-honey font-mono" dir="ltr">
                   {STORE_PHONE_DISPLAY}
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-xs font-bold text-[#25D366] group-hover:-translate-x-1 transition-transform">
-              <span>محادثة فورية</span>
-              <ArrowLeft className="w-4 h-4" />
+            <div className={`flex items-center gap-1 text-xs font-bold text-[#25D366] ${isRTL ? 'group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`}>
+              <span>{t.socialPopup.liveChat}</span>
+              <DirectionalArrow className="w-4 h-4" />
             </div>
           </a>
         </div>
@@ -187,7 +191,7 @@ export const SocialPopup: React.FC = () => {
                 onChange={(e) => setDontShowAgain(e.target.checked)}
                 className="w-4 h-4 rounded border-leather-dark bg-leather-espresso text-leather-brass focus:ring-leather-brass accent-leather-brass cursor-pointer"
               />
-              <span>عدم إظهار هذه الرسالة مرة أخرى</span>
+              <span>{t.socialPopup.dontShowAgain}</span>
             </label>
           </div>
 
@@ -195,7 +199,7 @@ export const SocialPopup: React.FC = () => {
             onClick={handleClose}
             className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-leather-cognac-rich to-leather-cognac hover:from-leather-cognac hover:to-leather-tan text-white font-bold text-sm shadow-xl shadow-leather-cognac/30 hover:shadow-leather-brass/20 transition-all duration-300 border border-leather-brass/40 flex items-center justify-center gap-2"
           >
-            <span>تصفح تشكيلة المتجر الآن</span>
+            <span>{t.socialPopup.exploreBtn}</span>
             <Check className="w-4 h-4" />
           </button>
         </div>
@@ -204,3 +208,4 @@ export const SocialPopup: React.FC = () => {
     </div>
   );
 };
+
