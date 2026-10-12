@@ -51,7 +51,7 @@ export const ProductGrid: React.FC = () => {
     const colName = currentColorName(selectedColor);
     const text = encodeURIComponent(
       language === 'en'
-        ? `Hello Selim Leather, I would like to order:\n` +
+        ? `Hello Seliem Leather, I would like to order:\n` +
           `📦 ${currentProductName}\n` +
           `🎨 Selected Color: ${colName}\n` +
           `🔢 Quantity: ${quantity}\n` +
@@ -492,7 +492,7 @@ export const ProductGrid: React.FC = () => {
           <a
             href={`https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(
               language === 'en'
-                ? 'Hello Selim Leather, I would like to inquire about custom laser engraving on The Artisan Dopp Kit.'
+                ? 'Hello Seliem Leather, I would like to inquire about custom laser engraving on The Artisan Dopp Kit.'
                 : 'مرحباً سليم للجلود، أود الاستفسار عن خدمة حفر الأسماء والإهداءات على حقيبة The Artisan Dopp Kit.'
             )}`}
             target="_blank"

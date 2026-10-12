@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { CartProvider } from './context/CartContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TrustBadges } from './components/TrustBadges';
-import { ProductGrid } from './components/ProductGrid';
+import { ProductCarousel } from './components/ProductCarousel';
+import { ProductDetailPage } from './components/ProductDetailPage';
 import { CraftsmanshipSection } from './components/CraftsmanshipSection';
 import { Testimonials } from './components/Testimonials';
 import { FAQSection } from './components/FAQSection';
@@ -20,6 +21,41 @@ import { StickyMobileCartBar } from './components/StickyMobileCartBar';
 
 const AppContent: React.FC = () => {
   const { isRTL } = useLanguage();
+  const [currentView, setCurrentView] = useState<'landing' | 'product'>('landing');
+  const [selectedProductColorIndex, setSelectedProductColorIndex] = useState<number>(0);
+
+  // Sync with browser URL hash
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash.startsWith('#product') || hash.startsWith('#/product')) {
+        setCurrentView('product');
+      } else {
+        setCurrentView('landing');
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const navigateToView = (view: 'landing' | 'product') => {
+    setCurrentView(view);
+    if (view === 'product') {
+      window.location.hash = '#product';
+    } else {
+      window.location.hash = '#hero';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectProductFromCarousel = (colorIndex?: number) => {
+    setSelectedProductColorIndex(colorIndex ?? 0);
+    setCurrentView('product');
+    window.location.hash = '#product';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div
@@ -28,33 +64,43 @@ const AppContent: React.FC = () => {
       } selection:bg-leather-brass selection:text-white overflow-x-hidden w-full relative`}
     >
       {/* Navigation Bar */}
-      <Navbar />
+      <Navbar currentView={currentView} onNavigate={navigateToView} />
 
       {/* Main Content */}
       <main className="flex-grow">
-        {/* Hero Section */}
-        <Hero />
+        {currentView === 'landing' ? (
+          <>
+            {/* Hero Section */}
+            <Hero onNavigate={navigateToView} />
 
-        {/* Trust Badges */}
-        <TrustBadges />
+            {/* Trust Badges */}
+            <TrustBadges />
 
-        {/* Master Product Showcase & Color Studio */}
-        <ProductGrid />
+            {/* Master Product Showcase & Marketing Carousel (Mobile No-Scroll Fit) */}
+            <ProductCarousel onSelectProduct={handleSelectProductFromCarousel} />
 
-        {/* Handcraft & Quality Story */}
-        <CraftsmanshipSection />
+            {/* Handcraft & Quality Story */}
+            <CraftsmanshipSection />
 
-        {/* Customer Reviews */}
-        <Testimonials />
+            {/* Customer Reviews */}
+            <Testimonials />
 
-        {/* Frequently Asked Questions */}
-        <FAQSection />
+            {/* Frequently Asked Questions */}
+            <FAQSection />
+          </>
+        ) : (
+          /* Dedicated Product Page */
+          <ProductDetailPage
+            initialColorIndex={selectedProductColorIndex}
+            onBackToHome={() => navigateToView('landing')}
+          />
+        )}
       </main>
 
       {/* Footer */}
       <Footer />
 
-      {/* Global Drawers, Modals & Floating CTA */}
+      {/* Global Drawers, Modals & Floating Tools */}
       <CartDrawer />
       <CheckoutModal />
       <ProductQuickView />

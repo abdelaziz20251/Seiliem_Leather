@@ -3,12 +3,16 @@ import { ArrowRight, ArrowLeft, Shield, Sparkles, Award, CheckCircle2, MessageCi
 import { STORE_WHATSAPP_NUMBER } from '../data/products';
 import { useLanguage } from '../context/LanguageContext';
 
-export const Hero: React.FC = () => {
-  const { t, language, isRTL, formatPrice } = useLanguage();
+interface HeroProps {
+  onNavigate?: (view: 'landing' | 'product') => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
+  const { t, language, isRTL } = useLanguage();
 
   const directWhatsAppLink = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(
     language === 'en'
-      ? 'Hello Selim Leather, I would like to order The Artisan Dopp Kit.'
+      ? 'Hello Seliem Leather, I would like to order The Artisan Dopp Kit.'
       : 'مرحباً سليم للجلود، أرغب في طلب حقيبة The Artisan Dopp Kit.'
   )}`;
 
@@ -109,7 +113,7 @@ export const Hero: React.FC = () => {
                 <div className="relative h-80 sm:h-96 w-full overflow-hidden bg-leather-darkest">
                   <img
                     src="/products/vintage-brown.jpeg"
-                    alt="The Artisan Leather Dopp Kit by Selim Leather"
+                    alt="The Artisan Leather Dopp Kit by Seliem Leather"
                     className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-leather-darkest via-transparent to-black/20" />
@@ -128,26 +132,29 @@ export const Hero: React.FC = () => {
                 </div>
 
                 {/* Card Bottom Meta */}
-                <div className="p-5 bg-gradient-to-b from-leather-espresso to-leather-darkest border-t border-leather-dark flex items-center justify-between">
-                  <div>
-                    <span className="text-xs text-leather-honey font-medium block">{t.hero.showcaseWeekly}</span>
-                    <h3 className="text-lg font-bold text-leather-cream font-serif">{t.hero.showcaseName}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-leather-brass-light font-black text-lg">
-                        {formatPrice(890)}
-                      </span>
-                      <span className="text-xs text-leather-parchment/60 line-through">
-                        {formatPrice(1150)}
-                      </span>
+                <div className="p-4 sm:p-5 bg-gradient-to-b from-leather-espresso to-leather-darkest border-t border-leather-dark flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <span className="text-[11px] text-leather-honey font-medium block truncate">{t.hero.showcaseWeekly}</span>
+                    <h3 className="text-base sm:text-lg font-bold text-leather-cream font-serif truncate">{t.hero.showcaseName}</h3>
+                    <div className="inline-flex items-center gap-1.5 mt-1 text-xs text-leather-brass-light font-bold">
+                      <Sparkles className="w-3.5 h-3.5 text-leather-brass flex-shrink-0 animate-pulse" />
+                      <span>{language === 'en' ? 'Exclusive Offer via WhatsApp' : 'العرض الحصري متاح عبر واتساب'}</span>
                     </div>
                   </div>
 
-                  <a
-                    href="#products"
-                    className="px-4 py-2.5 bg-leather-brass text-leather-darkest font-bold text-xs rounded-lg hover:bg-leather-brass-light transition-colors shadow-md"
+                  <button
+                    onClick={() => {
+                      if (onNavigate) {
+                        onNavigate('product');
+                      } else {
+                        const el = document.getElementById('products');
+                        el?.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    className="px-4 py-2.5 bg-gradient-to-r from-leather-brass to-leather-brass-light text-leather-darkest font-black text-xs rounded-xl hover:opacity-95 transition-all shadow-md flex-shrink-0 cursor-pointer active:scale-95"
                   >
-                    {t.hero.browseColors}
-                  </a>
+                    {language === 'en' ? 'View Details' : 'استعراض التفاصيل'}
+                  </button>
                 </div>
               </div>
 

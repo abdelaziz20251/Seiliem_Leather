@@ -56,8 +56,8 @@ export const SocialPopup: React.FC = () => {
 
         {/* Brand Emblem & Welcome Header */}
         <div className="text-center space-y-3 mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-leather-cognac-rich to-leather-espresso border-2 border-leather-brass/50 shadow-xl shadow-black/50 mx-auto">
-            <span className="font-serif font-black text-3xl text-leather-brass-light tracking-tighter">S</span>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-leather-espresso/90 border-2 border-leather-brass/50 shadow-xl shadow-black/50 mx-auto p-1.5 overflow-hidden">
+            <img src="/logo.png" alt="Seliem Leather" className="w-full h-full object-contain filter drop-shadow" />
           </div>
 
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-leather-dark/80 border border-leather-brass/30 text-leather-sand text-[11px] font-bold">
@@ -92,7 +92,7 @@ export const SocialPopup: React.FC = () => {
                   {language === 'en' ? 'Instagram' : 'انستجرام (Instagram)'}
                 </div>
                 <div className="text-[11px] text-leather-parchment/60 font-mono" dir="ltr">
-                  @selim.leather
+                  @seliem.leather
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@ export const SocialPopup: React.FC = () => {
                   {language === 'en' ? 'Facebook' : 'فيسبوك (Facebook)'}
                 </div>
                 <div className="text-[11px] text-leather-parchment/60 font-serif">
-                  {language === 'en' ? 'Selim Leather Official' : 'Selim Leather - سليم للجلود'}
+                  {language === 'en' ? 'Seliem Leather Official' : 'Seliem Leather - سليم للجلود'}
                 </div>
               </div>
             </div>

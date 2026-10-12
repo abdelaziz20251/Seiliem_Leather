@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
 
   const directWhatsAppLink = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(
     language === 'en'
-      ? 'Hello Selim Leather, I would like to inquire about your handcrafted leather goods.'
+      ? 'Hello Seliem Leather, I would like to inquire about your handcrafted leather goods.'
       : 'مرحباً سليم للجلود، أود الاستفسار عن تفاصيل منتج لديكم.'
   )}`;
 
@@ -22,12 +22,16 @@ export const Footer: React.FC = () => {
           {/* Brand Info (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-leather-cognac-rich to-leather-espresso border border-leather-brass/40 flex items-center justify-center">
-                <span className="font-serif font-black text-xl text-leather-brass-light">S</span>
+              <div className="w-12 h-12 rounded-xl bg-leather-espresso/90 border border-leather-brass/40 flex items-center justify-center p-1 shadow-md shadow-black/50 overflow-hidden">
+                <img
+                  src="/logo.png"
+                  alt="Seliem Leather Official Logo"
+                  className="w-full h-full object-contain filter drop-shadow"
+                />
               </div>
               <div>
                 <span className="text-xl font-black text-leather-cream font-serif block">
-                  SELIM LEATHER
+                  SELIEM LEATHER
                 </span>
                 <span className="text-[10px] text-leather-honey tracking-widest uppercase font-semibold">
                   {t.common.brandSub}
@@ -214,7 +218,7 @@ export const Footer: React.FC = () => {
       <div className="bg-leather-espresso border-t border-leather-dark py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left rtl:sm:text-right text-xs text-leather-parchment/60">
           <div>
-            © {new Date().getFullYear()} Selim Leather. {t.footer.copyright}
+            © {new Date().getFullYear()} Seliem Leather. {t.footer.copyright}
           </div>
           <div className="flex items-center gap-2 text-leather-parchment/80">
             <span>

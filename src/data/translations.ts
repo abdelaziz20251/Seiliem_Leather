@@ -31,7 +31,7 @@ export const EGYPT_GOVERNORATES_BILINGUAL = [
 export const TRANSLATIONS = {
   en: {
     common: {
-      brandName: 'SELIM LEATHER',
+      brandName: 'SELIEM LEATHER',
       brandSub: 'Handcrafted Genuine Leather',
       currency: 'EGP',
       inspectBadge: 'Free Inspection with Courier',
@@ -65,7 +65,7 @@ export const TRANSLATIONS = {
       badge: 'Authentic Egyptian Craftsmanship • 100% Pure Full-Grain Cowhide • Zero Synthetic Materials',
       headlineMain: 'The Luxury of Aged Full-Grain Leather',
       headlineSub: 'The Artisan Dopp Kit Edition',
-      description: 'At Selim Leather, we handcraft our signature masterpiece from the finest 100% full-grain Crazy Horse cowhide. Your distinguished everyday companion for grooming kits, personal tech, and travel—with full freedom to inspect before paying.',
+      description: 'At Seliem Leather, we handcraft our signature masterpiece from the finest 100% full-grain Crazy Horse cowhide. Your distinguished everyday companion for grooming kits, personal tech, and travel—with full freedom to inspect before paying.',
       trustPillars: [
         { title: '100% Pure Cowhide', sub: 'Aged Crazy Horse Finish' },
         { title: 'Inspect Before Paying', sub: 'Examine with the courier' },
@@ -120,7 +120,15 @@ export const TRANSLATIONS = {
         'Reinforced genuine leather side handle for effortless daily carrying and bathroom hanging.',
         'Heavy-duty hand-stitched seams using bonded waxed threads resistant to moisture and wear.'
       ],
-      addToCartBtn: (price: number) => `Add to Cart (${price.toLocaleString('en-US')} EGP)`,
+      salesOfferTag: 'Exclusive Daily Offer Available via WhatsApp',
+      salesOfferDesc: 'Order directly via WhatsApp to claim special seasonal discounts and full courier inspection before payment.',
+      orderViaWhatsAppBtn: 'Order Now via WhatsApp',
+      viewProductSpecsBtn: 'View Full Product Details & Specs',
+      backToHome: 'Back to Home',
+      productBreadcrumb: 'Home / Handcrafted Dopp Kits / The Artisan Dopp Kit',
+      fullFeaturesTitle: 'Mastercrafted Features & Story',
+      inspectionNoticeBox: '100% Free Inspection Before Payment — Examine the authentic Crazy Horse leather with the courier before paying a single pound.',
+      addToCartBtn: (_price?: number) => 'Order via WhatsApp',
       addedBtn: 'Added to Cart Successfully!',
       directWhatsAppBtn: 'Order Directly via WhatsApp (Free Inspection)',
       badge1: '100% Free Inspection',
@@ -139,7 +147,7 @@ export const TRANSLATIONS = {
     craftsmanship: {
       tag: 'A Heritage Passed Across Generations',
       title: 'The Craftsmanship & Secrets of Genuine Leather',
-      subtitle: 'In our atelier, we reject rapid commercial mass-production. Every piece from Selim Leather is a unique work of art requiring hours of focused precision to deliver a lifelong companion.',
+      subtitle: 'In our atelier, we reject rapid commercial mass-production. Every piece from Seliem Leather is a unique work of art requiring hours of focused precision to deliver a lifelong companion.',
       steps: [
         {
           title: 'Full-Grain Top Layer Selection',
@@ -159,12 +167,12 @@ export const TRANSLATIONS = {
         }
       ],
       strictQuality: 'Strict Quality Standards',
-      goldenGuaranteeTitle: "Selim's Golden Guarantee: Inspect with Your Own Hands Before Paying",
+      goldenGuaranteeTitle: "Seliem's Golden Guarantee: Inspect with Your Own Hands Before Paying",
       goldenGuaranteeSub: 'You are warmly invited to perform the genuine leather aroma and grain test with the courier before paying.'
     },
     testimonials: {
       tag: 'Verified Client Experiences',
-      title: 'What Our Clients Say About Selim',
+      title: 'What Our Clients Say About Seliem',
       subtitle: 'Trusted by more than 1,200 satisfied patrons across Egypt. Their reviews are our badge of honor.',
       verifiedBuyer: 'Verified Buyer',
       reviews: [
@@ -204,7 +212,7 @@ export const TRANSLATIONS = {
           answer: 'Absolutely yes! We have 100% confidence in our craftsmanship. You have the full right to open the package and inspect the leather texture, aroma, and zippers with the courier before paying a single pound. If not completely delighted, you may reject delivery on the spot with zero hassle.'
         },
         {
-          question: 'What type of leather is used in Selim products?',
+          question: 'What type of leather is used in Seliem products?',
           answer: 'All our products are crafted exclusively from 100% pure vegetable-tanned full-grain cowhide (Full-Grain & Top-Grain Crazy Horse). We strictly never use faux leather, bonded leather, or PU materials.'
         },
         {
@@ -273,7 +281,7 @@ export const TRANSLATIONS = {
         phoneInvalid: 'Please enter a valid Egyptian mobile number (e.g. 01012345678).',
         addressRequired: 'Please provide detailed delivery address.'
       },
-      waHeader: '🛍️ New Order from Selim Leather',
+      waHeader: '🛍️ New Order from Seliem Leather',
       waClient: '👤 Customer Name:',
       waPhone: '📞 Phone:',
       waAddress: '📍 Address:',
@@ -287,7 +295,7 @@ export const TRANSLATIONS = {
       waAltPhone: '(Alt Phone: '
     },
     socialPopup: {
-      badge: 'Selim Leather Community',
+      badge: 'Seliem Leather Community',
       title: 'Welcome to Our Atelier!',
       description: 'Follow our official social channels to see behind-the-scenes leathercraft, raw hide workshops, and exclusive seasonal drops ✨',
       dontShowAgain: "Don't show this message again",
@@ -314,7 +322,7 @@ export const TRANSLATIONS = {
       directWhatsApp: 'Instant WhatsApp Order',
       decreaseQty: 'Decrease quantity',
       increaseQty: 'Increase quantity',
-      waGreeting: 'Hello Selim Leather, I would like to order this item directly:\n',
+      waGreeting: 'Hello Seliem Leather, I would like to order this item directly:\n',
       waItem: '📦 Product:',
       waColor: '🎨 Color:',
       waQty: '🔢 Quantity:',
@@ -429,7 +437,15 @@ export const TRANSLATIONS = {
         'لسان سحب جانبي مع حلقة نحاسية لسهولة وسلاسة الفتح.',
         'خياطة مشمعة يدوية فائقة القوة ومقاومة للاهتراء.'
       ],
-      addToCartBtn: (price: number) => `أضف إلى السلة (${price.toLocaleString('ar-EG')} ج.م)`,
+      salesOfferTag: 'العرض الحصري اليوم متاح عبر واتساب',
+      salesOfferDesc: 'اطلب الآن مباشرة عبر واتساب للاستفادة من عروض اليوم وميزة الفحص والمعاينة قبل الدفع.',
+      orderViaWhatsAppBtn: 'اطلب الآن عبر واتساب',
+      viewProductSpecsBtn: 'استعراض مواصفات المنتج والطلب',
+      backToHome: 'العودة إلى الصفحة الرئيسية',
+      productBreadcrumb: 'الرئيسية / حقائب يد ومستلزمات / حقيبة The Artisan Dopp Kit',
+      fullFeaturesTitle: 'مزايا ومواصفات التحفة الحرفية بالتفصيل',
+      inspectionNoticeBox: 'حق المعاينة الكاملة قبل الدفع — افحص خامة الجلد الطبيعي Crazy Horse والتقفيل مع المندوب قبل دفع أي مبلغ.',
+      addToCartBtn: (_price?: number) => 'طلب عبر واتساب',
       addedBtn: 'تمت الإضافة للسلة بنجاح!',
       directWhatsAppBtn: 'طلب فوري مباشر عبر واتساب (معاينة قبل الدفع)',
       badge1: 'معاينة وفحص 100%',
@@ -582,7 +598,7 @@ export const TRANSLATIONS = {
         phoneInvalid: 'يرجى إدخال رقم هاتف مصري صحيح (مثال: 01012345678)',
         addressRequired: 'يرجى إدخال العنوان بالتفصيل (المنطقة، الشارع، العمارة)'
       },
-      waHeader: '🛍️ طلب جديد من Selim Leather',
+      waHeader: '🛍️ طلب جديد من Seliem Leather',
       waClient: '👤 اسم العميل:',
       waPhone: '📞 الهاتف:',
       waAddress: '📍 العنوان:',

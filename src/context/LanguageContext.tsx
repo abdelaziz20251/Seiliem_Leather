@@ -48,8 +48,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     document.documentElement.dir = dir;
     document.title =
       language === 'en'
-        ? 'Selim Leather | Handcrafted Genuine Leather Masterpieces'
-        : 'سليم للجلود الطبيعية | Selim Leather - حرفة يدوية تدوم لأجيال';
+        ? 'Seliem Leather | Handcrafted Genuine Leather Masterpieces'
+        : 'سليم للجلود الطبيعية | Seliem Leather - حرفة يدوية تدوم لأجيال';
   }, [language, dir]);
 
   const formatPrice = (amount: number) => {

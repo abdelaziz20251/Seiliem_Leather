@@ -4,8 +4,8 @@ import { useCart } from '../context/CartContext';
 import { useLanguage } from '../context/LanguageContext';
 
 export const StickyMobileCartBar: React.FC = () => {
-  const { cart, totalAmount, totalItems, setIsCheckoutOpen, setIsCartOpen } = useCart();
-  const { isRTL, t, formatPrice } = useLanguage();
+  const { cart, totalItems, setIsCheckoutOpen, setIsCartOpen } = useCart();
+  const { isRTL, t, language } = useLanguage();
 
   if (cart.length === 0) return null;
 
@@ -32,8 +32,8 @@ export const StickyMobileCartBar: React.FC = () => {
             <span className="text-[11px] text-leather-parchment/80 font-medium">
               {t.stickyMobile.totalItems(totalItems)}
             </span>
-            <span className="text-base font-black text-leather-brass-light font-mono leading-tight">
-              {formatPrice(totalAmount)}
+            <span className="text-xs font-black text-leather-brass-light leading-tight">
+              {language === 'en' ? 'Special WhatsApp Offer' : 'عرض واتساب الحصري'}
             </span>
           </div>
         </button>

@@ -4,16 +4,36 @@ import { useCart } from '../context/CartContext';
 import { useLanguage } from '../context/LanguageContext';
 import { STORE_WHATSAPP_NUMBER, STORE_PHONE_DISPLAY } from '../data/products';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  currentView?: 'landing' | 'product';
+  onNavigate?: (view: 'landing' | 'product') => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ currentView = 'landing', onNavigate }) => {
   const { totalItems, setIsCartOpen } = useCart();
   const { t, language, toggleLanguage } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const directWhatsAppLink = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(
     language === 'en'
-      ? 'Hello Selim Leather, I would like to inquire about The Artisan Dopp Kit and current offers.'
+      ? 'Hello Seliem Leather, I would like to inquire about The Artisan Dopp Kit and current offers.'
       : 'مرحباً سليم للجلود، أود الاستفسار عن التشكيلة المتوفرة وعروض اليوم.'
   )}`;
+
+  const handleNavClick = (view: 'landing' | 'product', hashTarget?: string) => {
+    setMobileMenuOpen(false);
+    if (onNavigate) {
+      onNavigate(view);
+    }
+    if (hashTarget) {
+      setTimeout(() => {
+        const el = document.querySelector(hashTarget);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 50);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-leather-darkest/95 backdrop-blur-md border-b border-leather-dark/60 text-leather-cream transition-all duration-300">
@@ -38,40 +58,74 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Logo & Brand Emblem */}
+          {/* Official Brand Logo */}
           <div className="flex items-center gap-3">
-            <a href="#" className="flex items-center gap-3 group">
-              <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-leather-cognac-rich to-leather-espresso border border-leather-brass/40 flex items-center justify-center shadow-md shadow-black/40 group-hover:border-leather-brass transition-all duration-300">
-                <span className="font-serif font-black text-2xl text-leather-brass-light tracking-tighter">S</span>
+            <button
+              onClick={() => handleNavClick('landing', '#hero')}
+              className="flex items-center gap-3 group text-left rtl:text-right cursor-pointer focus:outline-none"
+              aria-label="Seliem Leather Home"
+            >
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-leather-espresso/90 border border-leather-brass/40 flex items-center justify-center shadow-lg shadow-black/50 p-1 group-hover:border-leather-brass group-hover:shadow-leather-brass/20 transition-all duration-300 overflow-hidden">
+                <img
+                  src="/logo.png"
+                  alt="Seliem Leather Official Logo"
+                  className="w-full h-full object-contain filter drop-shadow group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-xl sm:text-2xl font-black tracking-wider text-leather-cream font-serif group-hover:text-leather-brass-light transition-colors">
-                  SELIM LEATHER
+                  SELIEM LEATHER
                 </span>
                 <span className="text-[10px] text-leather-honey tracking-widest uppercase -mt-1 font-semibold">
                   {t.common.brandSub}
                 </span>
               </div>
-            </a>
+            </button>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-7 lg:gap-8 text-sm font-medium">
-            <a href="#hero" className="text-leather-cream hover:text-leather-brass-light transition-colors">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium">
+            <button
+              onClick={() => handleNavClick('landing', '#hero')}
+              className={`transition-colors cursor-pointer ${
+                currentView === 'landing'
+                  ? 'text-leather-brass-light font-bold'
+                  : 'text-leather-parchment/90 hover:text-leather-brass-light'
+              }`}
+            >
               {t.navbar.home}
-            </a>
-            <a href="#products" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
-              {t.navbar.doppKit}
-            </a>
-            <a href="#craftsmanship" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
+            </button>
+            <button
+              onClick={() => handleNavClick('product')}
+              className={`transition-colors cursor-pointer flex items-center gap-1.5 ${
+                currentView === 'product'
+                  ? 'text-leather-brass-light font-bold'
+                  : 'text-leather-parchment/90 hover:text-leather-brass-light'
+              }`}
+            >
+              <span>{t.navbar.doppKit}</span>
+              <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-leather-brass/20 text-leather-brass-light border border-leather-brass/40">
+                {language === 'en' ? 'Product Page' : 'صفحة المنتج'}
+              </span>
+            </button>
+            <button
+              onClick={() => handleNavClick('landing', '#craftsmanship')}
+              className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors cursor-pointer"
+            >
               {t.navbar.craftsmanship}
-            </a>
-            <a href="#testimonials" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
+            </button>
+            <button
+              onClick={() => handleNavClick('landing', '#testimonials')}
+              className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors cursor-pointer"
+            >
               {t.navbar.reviews}
-            </a>
-            <a href="#faqs" className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors">
+            </button>
+            <button
+              onClick={() => handleNavClick('landing', '#faqs')}
+              className="text-leather-parchment/90 hover:text-leather-brass-light transition-colors cursor-pointer"
+            >
               {t.navbar.faqs}
-            </a>
+            </button>
           </nav>
 
           {/* Action Buttons */}
@@ -146,41 +200,39 @@ export const Navbar: React.FC = () => {
             </button>
           </div>
 
-          <a
-            href="#hero"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
+          <button
+            onClick={() => handleNavClick('landing', '#hero')}
+            className="w-full text-left rtl:text-right py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
             {t.navbar.home}
-          </a>
-          <a
-            href="#products"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
+          </button>
+          <button
+            onClick={() => handleNavClick('product')}
+            className="w-full text-left rtl:text-right py-2 text-sm text-leather-brass-light font-bold flex items-center justify-between"
           >
-            {t.navbar.doppKit}
-          </a>
-          <a
-            href="#craftsmanship"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
+            <span>{t.navbar.doppKit}</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-leather-brass/20 text-leather-brass border border-leather-brass/40">
+              {language === 'en' ? 'Product Page' : 'صفحة المنتج'}
+            </span>
+          </button>
+          <button
+            onClick={() => handleNavClick('landing', '#craftsmanship')}
+            className="w-full text-left rtl:text-right py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
             {t.navbar.craftsmanship}
-          </a>
-          <a
-            href="#testimonials"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
+          </button>
+          <button
+            onClick={() => handleNavClick('landing', '#testimonials')}
+            className="w-full text-left rtl:text-right py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
             {t.navbar.reviews}
-          </a>
-          <a
-            href="#faqs"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 text-sm text-leather-cream hover:text-leather-brass"
+          </button>
+          <button
+            onClick={() => handleNavClick('landing', '#faqs')}
+            className="w-full text-left rtl:text-right py-2 text-sm text-leather-cream hover:text-leather-brass"
           >
             {t.navbar.faqs}
-          </a>
+          </button>
           <div className="pt-2">
             <a
               href={directWhatsAppLink}

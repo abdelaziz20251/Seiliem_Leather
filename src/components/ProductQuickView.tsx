@@ -119,16 +119,10 @@ export const ProductQuickView: React.FC = () => {
                 {productName}
               </h2>
 
-              {/* Price */}
-              <div className="flex items-baseline gap-2.5">
-                <span className="text-2xl sm:text-3xl font-black text-leather-brass-light font-mono">
-                  {formatPrice(quickViewProduct.price)}
-                </span>
-                {quickViewProduct.originalPrice && (
-                  <span className="text-xs sm:text-sm text-leather-parchment/50 line-through">
-                    {formatPrice(quickViewProduct.originalPrice)}
-                  </span>
-                )}
+              {/* Sales Offer Banner (No Numerical Price) */}
+              <div className="flex items-center gap-2 text-leather-brass-light font-bold text-xs sm:text-sm bg-leather-dark/80 border border-leather-brass/30 px-3 py-2 rounded-xl">
+                <Sparkles className="w-4 h-4 text-leather-brass animate-pulse flex-shrink-0" />
+                <span>{language === 'en' ? 'Exclusive Offer via WhatsApp • Free Inspection' : 'العرض الحصري متاح عبر واتساب • معاينة مجانية'}</span>
               </div>
 
               {/* Short Description */}
@@ -190,8 +184,9 @@ export const ProductQuickView: React.FC = () => {
                   </button>
                 </div>
 
-                <div className="font-mono text-base font-black text-leather-brass-light">
-                  {formatPrice(quickViewProduct.price * quantity)}
+                <div className="text-xs font-bold text-leather-brass-light flex items-center gap-1">
+                  <Sparkles className="w-3.5 h-3.5 text-leather-brass" />
+                  <span>{language === 'en' ? 'Free Inspection' : 'معاينة مجانية'}</span>
                 </div>
               </div>
 
