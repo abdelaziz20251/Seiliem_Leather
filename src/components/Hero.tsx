@@ -114,6 +114,9 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                   <img
                     src="/products/vintage-brown.jpeg"
                     alt="The Artisan Leather Dopp Kit by Seliem Leather"
+                    width={600}
+                    height={450}
+                    fetchPriority="high"
                     className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-leather-darkest via-transparent to-black/20" />

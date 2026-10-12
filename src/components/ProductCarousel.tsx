@@ -120,6 +120,9 @@ export const ProductCarousel: React.FC<ProductCarouselProps> = ({ onSelectProduc
                   key={activeColor.image}
                   src={activeColor.image}
                   alt={`${product.name} - ${currentColorName(activeColor)}`}
+                  width={800}
+                  height={600}
+                  fetchPriority="high"
                   className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-all duration-700 ease-out animate-fade-in"
                   loading="eager"
                 />

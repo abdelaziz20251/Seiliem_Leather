@@ -1,6 +1,7 @@
 import type { Product } from '../types';
 
-// بيانات التواصل والواتساب المعتمدة
+// بيانات الموقع والتواصل المعتمدة
+export const SITE_URL = 'https://seliem-leather.com';
 export const STORE_WHATSAPP_NUMBER = '201113338412'; // الرقم الدولي لرابط واتساب
 export const STORE_PHONE_DISPLAY = '01113338412'; // العرض المحلي في الموقع
 export const STORE_PHONE_INTL = '+20 11 13338412'; // العرض الدولي الكامل
@@ -15,7 +16,7 @@ export const SOCIAL_LINKS = {
 
 export const PRODUCTS: Product[] = [
   {
-    id: 'selim-artisan-dopp-kit',
+    id: 'seliem-artisan-dopp-kit',
     name: 'حقيبة اليد والمستلزمات الفاخرة «The Artisan Dopp Kit»',
     nameEn: 'The Artisan Leather Dopp Kit',
     category: 'dopp-kit',

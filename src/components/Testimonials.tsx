@@ -48,9 +48,9 @@ export const Testimonials: React.FC = () => {
               {/* Author Info */}
               <div className="pt-4 border-t border-leather-parchment flex items-center justify-between">
                 <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-leather-espresso font-serif">
+                  <h3 className="text-xs sm:text-sm font-bold text-leather-espresso font-serif">
                     {item.name}
-                  </h4>
+                  </h3>
                   <span className="text-[11px] text-leather-dark/60 block">
                     {item.city}
                   </span>

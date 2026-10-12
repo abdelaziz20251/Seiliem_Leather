@@ -94,6 +94,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   key={selectedColor.image}
                   src={selectedColor.image}
                   alt={`${currentProductName} - ${currentColorName(selectedColor)}`}
+                  width={800}
+                  height={600}
+                  fetchPriority="high"
                   className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-all duration-500 ease-out animate-fade-in"
                 />
 
@@ -146,6 +149,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                       <img
                         src={c.image}
                         alt={currentColorName(c)}
+                        width={180}
+                        height={135}
+                        loading="lazy"
                         className="w-full h-full object-cover object-center"
                       />
                       <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors" />
@@ -415,6 +421,110 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </p>
             </div>
           </div>
+
+          {/* Technical Specifications Table (Dense Structured Data for LLMs & AI Scrapers) */}
+          <div className="mt-10 pt-8 border-t border-leather-brass/30">
+            <h3 className="text-lg sm:text-xl font-bold text-leather-espresso font-serif mb-4 text-left rtl:text-right">
+              {language === 'en' ? 'Technical Specifications Sheet' : 'جدول المواصفات الفنية للحقيبة'}
+            </h3>
+
+            <div className="overflow-x-auto bg-white rounded-2xl border border-leather-brass/30 shadow-sm p-4 sm:p-6">
+              <table className="w-full text-xs sm:text-sm text-left rtl:text-right border-collapse">
+                <caption className="sr-only">
+                  {language === 'en'
+                    ? 'Technical specifications of The Artisan Leather Dopp Kit'
+                    : 'جدول المواصفات والخصائص الفنية لحقيبة سليم للجلود'}
+                </caption>
+                <tbody className="divide-y divide-leather-parchment/60">
+                  <tr>
+                    <th scope="row" className="py-3 px-2 font-bold text-leather-espresso w-1/3 sm:w-1/4">
+                      {language === 'en' ? 'Leather Grade' : 'نوع الجلد ونمطه'}
+                    </th>
+                    <td className="py-3 px-2 text-leather-dark font-medium">
+                      {language === 'en'
+                        ? '100% Genuine Full-Grain Vegetable-Tanned Crazy Horse Cowhide'
+                        : 'جلد بقري طبيعي 100% من الطبقة العلوية الكاملة (Crazy Horse Full-Grain)'}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row" className="py-3 px-2 font-bold text-leather-espresso">
+                      {language === 'en' ? 'Hardware & Zipper' : 'السحاب والإكسسوارات'}
+                    </th>
+                    <td className="py-3 px-2 text-leather-dark">
+                      {language === 'en'
+                        ? 'Heavy-duty rustproof antique brass teeth with pull tab and D-ring'
+                        : 'سحاب نحاسي عريض معتق فائق المتانة ومقاوم للصدأ مع حلقة D-Ring ولسان جانبي'}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row" className="py-3 px-2 font-bold text-leather-espresso">
+                      {language === 'en' ? 'Dimensions (L × H × W)' : 'الأبعاد والمقاسات'}
+                    </th>
+                    <td className="py-3 px-2 text-leather-dark font-mono font-bold">
+                      25 cm × 12 cm × 11 cm (approx. 9.8 × 4.7 × 4.3 inches)
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row" className="py-3 px-2 font-bold text-leather-espresso">
+                      {language === 'en' ? 'Capacity' : 'السعة والاستخدام'}
+                    </th>
+                    <td className="py-3 px-2 text-leather-dark">
+                      {language === 'en'
+                        ? 'Full grooming kits, razors, perfumes, wallets, phones, power banks, and cables'
+                        : 'مستلزمات الحلاقة الشخصية، العطور، محفظة الجيب، الهاتف، الشواحن وكابلات السفر'}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row" className="py-3 px-2 font-bold text-leather-espresso">
+                      {language === 'en' ? 'Stitching & Seams' : 'نوع الخياطة'}
+                    </th>
+                    <td className="py-3 px-2 text-leather-dark">
+                      {language === 'en'
+                        ? 'Reinforced saddle stitching with moisture-resistant bonded waxed threads'
+                        : 'خياطة يدوية مزدوجة معززة بخيوط مشمعة معالجة ومقاومة للاهتراء والرطوبة'}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row" className="py-3 px-2 font-bold text-leather-espresso">
+                      {language === 'en' ? 'Available Colors' : 'الألوان المتوفرة'}
+                    </th>
+                    <td className="py-3 px-2 text-leather-dark">
+                      {language === 'en'
+                        ? 'Vintage Crazy Horse Brown, Dark Chocolate, Vintage Olive Green, Classic Camel Tan'
+                        : 'بني عسلي معتق، بني شوكولاتة داكن، أخضر زيتي ملكي، هافان جملي دافئ'}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row" className="py-3 px-2 font-bold text-leather-espresso">
+                      {language === 'en' ? 'Delivery Inspection' : 'المعاينة قبل الدفع'}
+                    </th>
+                    <td className="py-3 px-2 text-emerald-800 font-bold">
+                      {language === 'en'
+                        ? '100% Free inspection & leather verification with the courier prior to payment'
+                        : 'معاينة وفحص مجاني 100% أمام مندوب الشحن للتأكد من الجلد الطبيعي قبل دفع أي مبلغ'}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row" className="py-3 px-2 font-bold text-leather-espresso">
+                      {language === 'en' ? 'Artisan Warranty' : 'الضمان وخدمة ما بعد البيع'}
+                    </th>
+                    <td className="py-3 px-2 text-leather-dark">
+                      {language === 'en'
+                        ? '1-Year comprehensive artisan warranty covering stitching and brass hardware'
+                        : 'ضمان صيانة حرفي شامل لمدة عام كامل على الخياطة والإكسسوارات النحاسية'}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
         {/* Courier Inspection Spotlight Banner */}
@@ -424,9 +534,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <ShieldCheck className="w-6 h-6 text-emerald-300" />
             </div>
             <div className="space-y-1">
-              <h3 className="text-lg sm:text-xl font-bold font-serif text-emerald-200">
+              <h2 className="text-lg sm:text-xl font-bold font-serif text-emerald-200">
                 {language === 'en' ? 'Full Freedom to Inspect Upon Delivery' : 'حق المعاينة الكاملة قبل دفع أي مليم'}
-              </h3>
+              </h2>
               <p className="text-xs sm:text-sm text-emerald-100/80 max-w-xl leading-relaxed">
                 {t.productShowcase.inspectionNoticeBox}
               </p>
@@ -472,7 +582,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   «{item.comment}»
                 </p>
                 <div className="pt-2 border-t border-leather-parchment/60 flex items-center justify-between">
-                  <span className="text-xs font-bold text-leather-espresso">{item.name}</span>
+                  <h3 className="text-xs font-bold text-leather-espresso">{item.name}</h3>
                   <span className="text-[11px] text-leather-dark/60">{item.city}</span>
                 </div>
               </div>

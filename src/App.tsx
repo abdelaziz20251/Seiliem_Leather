@@ -18,6 +18,7 @@ import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { FloatingSocialDock } from './components/FloatingSocialDock';
 import { SocialPopup } from './components/SocialPopup';
 import { StickyMobileCartBar } from './components/StickyMobileCartBar';
+import { SEOHead } from './components/SEOHead';
 
 const AppContent: React.FC = () => {
   const { isRTL } = useLanguage();
@@ -63,6 +64,9 @@ const AppContent: React.FC = () => {
         isRTL ? 'font-cairo' : 'font-sans'
       } selection:bg-leather-brass selection:text-white overflow-x-hidden w-full relative`}
     >
+      {/* Dynamic SEO Meta & Structured Data (JSON-LD) */}
+      <SEOHead currentView={currentView} />
+
       {/* Navigation Bar */}
       <Navbar currentView={currentView} onNavigate={navigateToView} />
 
